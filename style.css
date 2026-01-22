@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background-color: rgb(8, 33, 41);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 148px;
+}
+
+footer {
+    background-color: rgb(8, 33, 41);
+    height: 100vh;
+}
+
+.main-content {
+    background-color: rgb(5, 23, 30);
+}
+
+.pokeball {
+    height: 128px;
+    margin: 8px;
+}
+
+.search-bar {
+    height: 48px;
+    width: 320px;
+    margin-right: 32px;
+    border-radius: 8px;
+}
+
+.headline {
+    color: white;
+    font-size: 80px;
+}
+
+.pokemon-card {
+    background-color: rgb(8, 33, 41);
+    color: white;
+    height: 320px;
+    width: 240px;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  border-bottom: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

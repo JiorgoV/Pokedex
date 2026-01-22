@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
-    <script src="./script.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body onload="onloadFunc()">
     <header>
-
+        <img class="pokeball" src="./assets/img/pokeball.png" alt="">
+        <h1 class="headline">Pokedex</h1>
+        <input class="search-bar" type="text" placeholder="Pokemon suchen...">
     </header>
 
-    <section>
-
+    <section class="main-content">
+        <div class="pokemon-card">
+            <div class="id-name"> #1 Bulbasaur</div>
+            <div class="pokemon-img"><img src="" alt=""></div>
+            <div class="pokemon-types"> plant </div>
+        </div>
+        <button>Load more</button>
+        <div class="loader"></div>
     </section>
+
+    
+
+
 
     <footer></footer>
 
+
+    <script src="./script.js"></script>
 </body>
+
 </html>
