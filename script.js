@@ -6,7 +6,7 @@ async function onloadFunc() {
     let pokemonResponse = await loadData("pokemon?limit=40&offset=0")
     let pokemonList = pokemonResponse.results;  // das ist mein array
     pokemonList.forEach((pokemon) => {   // hier durch das array gehen
-        console.log(pokemon.name);  
+        console.log(pokemon.name);
     });
 
     loadPkmns();
@@ -31,32 +31,34 @@ async function loadPkmns() {
         let details = await loadData(shortUrl);
 
         pokemonDetails.push(details);
-        
+
     }
 
     console.log(pokemonDetails);
-    
 
+    // hideLoadingSpinner();
     renderPokemon(pokemonDetails);
     currentOffset += LIMIT;
-    // hideLoadingSpinner();
+
 }
 
 function renderPokemon(pokemonList) {
     let mainContent = document.getElementById('main-content');
-    
+
     pokemonList.forEach((pokemon) => {
         let imageUrl = pokemon.sprites.front_default;
 
         let typesHTML = '';
         pokemon.types.forEach((type) => {
-            let emoji = getTypeEmoji(type.type.name);
-            typesHTML += `<button class="type-badge ${type.type.name}">${emoji}</button>`;
+            typesHTML += `<img src="assets/icons/${type.type.name}.svg"
+                    alt="${type.type.name}"
+                    class="type-icon"
+                    title="${type.type.name}"></img>`;
         });
-        
+
         mainContent.innerHTML += `
             <div class="pokemon-card">
-            <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name}</h3></div>
+            <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
             <div class="pokemon-img"><img class="pkm-img" src="${imageUrl}" alt="${pokemon.name}"></div>
             <div class="pokemon-types">${typesHTML}</div>
             </div>
@@ -65,26 +67,3 @@ function renderPokemon(pokemonList) {
     });
 }
 
-function getTypeEmoji(typeName) {
-    const typeEmojis = {
-        fire: '🔥',
-        water: '💧',
-        grass: '🌿',
-        electric: '⚡',
-        ice: '❄️',
-        fighting: '👊',
-        poison: '☠️',
-        ground: '🌍',
-        flying: '🪽',
-        psychic: '🔮',
-        bug: '🐛',
-        rock: '🪨',
-        ghost: '👻',
-        dragon: '🐉',
-        dark: '🌙',
-        steel: '⚙️',
-        fairy: '🧚',
-        normal: '⭐'
-    };
-    return typeEmojis[typeName] || '❓';
-}
