@@ -1,0 +1,23 @@
+.grass {
+background-color: rgb(67,152,55);
+}
+
+.fire {
+    background-color: rgb(228,97,62);
+}
+
+.water {
+    background-color: rgb(48,153,225);
+}
+
+.bug {
+    background-color: rgb(159,159,40);
+}
+
+.flying {
+    background-color: rgb(116,170,208);
+}
+
+.normal {
+    background-color: rgb(130,130,130);
+}

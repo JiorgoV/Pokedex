@@ -58,12 +58,24 @@ footer {
   color: white;
   height: 320px;
   width: 240px;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .pokemon-card:hover {
   box-shadow:  5px 10px 10px white;
   transform: scale(1.05);
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 8px;
+  margin: 16px;
+  cursor: pointer;
 }
 
 .loader {
