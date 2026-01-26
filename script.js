@@ -47,6 +47,11 @@ function renderPokemon(pokemonList) {
 
     pokemonList.forEach((pokemon) => {
         let imageUrl = pokemon.sprites.front_default;
+        let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
+
+        if (!gifUrl) {
+            gifUrl = pokemon.sprites.front_default;
+        }
         let primaryType = pokemon.types[0].type.name;
 
         let typesHTML = '';
@@ -58,15 +63,24 @@ function renderPokemon(pokemonList) {
         });
 
         mainContent.innerHTML += `
-            <div class="pokemon-card" onclick="">
+            <div class="pokemon-card" onclick="openDialog()">
             <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
             <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${imageUrl}" alt="${pokemon.name}"></div>
             <div class="pokemon-types">${typesHTML}</div>
             </div>
-        </div>
         `;
     });
-    
-    
+
+
 }
 
+function openDialog() {
+    let dialog = document.getElementById('dialog');
+    dialog.showModal();
+    document.body.classList.add('no-scroll');
+}
+
+function closeDialog() {
+    let dialog = document.getElementById('dialog');
+    dialog.close();
+}

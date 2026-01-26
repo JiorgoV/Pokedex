@@ -12,6 +12,10 @@ body {
   background-color: rgb(5, 23, 30);
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 header {
   background-color: rgb(8, 33, 41);
   display: flex;
