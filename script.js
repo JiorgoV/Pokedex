@@ -103,9 +103,18 @@ function getDialogContentTemplate(pokemon) {
     }
     let primaryType = pokemon.types[0].type.name
 
+    let typesHTML = '';
+        pokemon.types.forEach((type) => {
+            typesHTML += `<img src="assets/icons/${type.type.name}.svg"
+                    alt="${type.type.name}"
+                    class="type-icon"
+                    title="${type.type.name}"></img>`;
+        });
+
     dialogContent.innerHTML = `
         <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
         <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}"></div>
+        <div class="pokemon-types">${typesHTML}</div>
 
         <div class="tab-navigation">
             <button class="tab-btn active" onclick="showTab('main')">Main</button>
@@ -135,3 +144,21 @@ function getDialogContentTemplate(pokemon) {
         </div>
     `
 }
+
+function showTab(tabName) {
+    let allTabs = document.querySelectorAll('.tab-content');
+    allTabs.forEach((tab) => {
+        tab.classList.remove('active');
+    });
+
+    let allButtons = document.querySelectorAll('.tab-btn');
+    allButtons.forEach((btn) => {
+        btn.classList.remove('active');
+    });
+
+    document.getElementById(tabName + '-tab').classList.add('active');
+
+    event.target.classList.add('active');
+}
+
+

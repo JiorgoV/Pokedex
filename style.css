@@ -152,3 +152,28 @@ button {
 .pkm-img  {
   height: 190px;
 }
+
+.tab-content {
+    display: none;  
+    padding: 20px;
+    color: white;
+}
+
+.tab-content.active {
+    display: block; 
+}
+
+.tab-btn {
+  width: 25%;
+  margin: 0;
+}
+
+.tab-btn.active {
+    border-bottom: 3px solid #e74c3c;  /* Roter Strich */
+    color: #e74c3c;                     /* Rote Schrift */
+}
+
+.tab-navigation {
+  display: flex;
+  justify-content: space-between;
+}
