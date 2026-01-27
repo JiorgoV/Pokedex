@@ -16,6 +16,21 @@ body.no-scroll {
     overflow: hidden;
 }
 
+.dialog {
+  position: fixed;
+  z-index: 1;
+  left: 35%;
+  top: 25%;
+  height: 540px;
+  width: 480px;
+  background-color: rgb(8, 33, 41);
+
+}
+
+.dialog-content {
+
+}
+
 header {
   background-color: rgb(8, 33, 41);
   display: flex;
@@ -123,6 +138,7 @@ button {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
 
 .pokemon-img {
