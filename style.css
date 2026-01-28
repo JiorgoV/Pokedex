@@ -119,6 +119,10 @@ button {
   }
 }
 
+.d-none {
+  display: none;
+}
+
 .pokemon-types {
     display: flex;
     gap: 10px;

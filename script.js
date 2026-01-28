@@ -20,7 +20,7 @@ async function loadData(path = "") {
 }
 
 async function loadPkmns() {
-    // showLoadingSpinner();
+    showLoadingSpinner()
 
     let pokemonResponse = await loadData(`pokemon?limit=${LIMIT}&offset=${currentOffset}`);
 
@@ -38,7 +38,7 @@ async function loadPkmns() {
 
     console.log(pokemonDetails);
 
-    // hideLoadingSpinner();
+    hideLoadingSpinner();
     renderPokemon(pokemonDetails);
     currentOffset += LIMIT;
 
@@ -161,4 +161,13 @@ function showTab(tabName) {
     event.target.classList.add('active');
 }
 
+function showLoadingSpinner() {
+    document.getElementById('loading-spinner').classList.remove('d-none');
+    document.getElementById('load-more-btn').disabled = true;
+}
+
+function hideLoadingSpinner() {
+    document.getElementById('loading-spinner').classList.add('d-none');
+    document.getElementById('load-more-btn').disabled = false;
+}
 
