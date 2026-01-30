@@ -86,7 +86,7 @@ footer {
   transform: scale(1.05);
 }
 
-.load-more {
+.loading-more {
   display: flex;
   justify-content: center;
 }
@@ -98,12 +98,12 @@ button {
 }
 
 .loader {
-  border: 16px solid #f3f3f3;
+  border: 32px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #3498db;
-  border-bottom: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
+  border-top: 32px solid grey;
+  border-bottom: 32px solid grey;
+  width: 240px;
+  height: 240px;
   -webkit-animation: spin 2s linear infinite;
   /* Safari */
   animation: spin 8s linear infinite;
@@ -121,6 +121,14 @@ button {
 
 .d-none {
   display: none;
+}
+
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(5, 23, 30);
 }
 
 .pokemon-types {

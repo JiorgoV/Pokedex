@@ -7,7 +7,6 @@ async function onloadFunc() {
     let pokemonResponse = await loadData("pokemon?limit=40&offset=0")
     let pokemonList = pokemonResponse.results;  // das ist mein array
     pokemonList.forEach((pokemon) => {   // hier durch das array gehen
-        console.log(pokemon.name);
     });
 
     loadPkmns();
@@ -21,27 +20,21 @@ async function loadData(path = "") {
 
 async function loadPkmns() {
     showLoadingSpinner()
-
     let pokemonResponse = await loadData(`pokemon?limit=${LIMIT}&offset=${currentOffset}`);
-
     let pokemonDetails = [];
     for (let i = 0; i < pokemonResponse.results.length; i++) {
         let pokemon = pokemonResponse.results[i];
-
         let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');
         let details = await loadData(shortUrl);
         pokemonDetails.push(details);
-
-        allPokemonData = allPokemonData.concat(pokemonDetails);
-
+        pokemonDetails.forEach((pokemon) => {
+            allPokemonData.push(pokemon);
+        });
     }
-
-    console.log(pokemonDetails);
 
     hideLoadingSpinner();
     renderPokemon(pokemonDetails);
     currentOffset += LIMIT;
-
 }
 
 function renderPokemon(pokemonList) {
@@ -93,6 +86,7 @@ function openDialog(pokemonId) {
 function closeDialog() {
     let dialog = document.getElementById('dialog');
     dialog.close();
+    document.body.classList.remove('no-scroll'); 
 }
 
 function getDialogContentTemplate(pokemon) {
@@ -104,12 +98,12 @@ function getDialogContentTemplate(pokemon) {
     let primaryType = pokemon.types[0].type.name
 
     let typesHTML = '';
-        pokemon.types.forEach((type) => {
-            typesHTML += `<img src="assets/icons/${type.type.name}.svg"
+    pokemon.types.forEach((type) => {
+        typesHTML += `<img src="assets/icons/${type.type.name}.svg"
                     alt="${type.type.name}"
                     class="type-icon"
                     title="${type.type.name}"></img>`;
-        });
+    });
 
     dialogContent.innerHTML = `
         <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
@@ -130,12 +124,37 @@ function getDialogContentTemplate(pokemon) {
             </div>
             
             <div id="stats-tab" class="tab-content">
-                <p>HP: ${pokemon.stats[0].base_stat}</p>
-                <p>Attack: ${pokemon.stats[1].base_stat}</p>
-                <p>Defense: ${pokemon.stats[2].base_stat}</p>
-                <p>Special Attack: ${pokemon.stats[3].base_stat}</p>
-                <p>Special Defense: ${pokemon.stats[4].base_stat}</p>
-                <p>Speed: ${pokemon.stats[5].base_stat}</p>
+                <div class="tab-stats">
+                    <p>HP:</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[0].base_stat}%;">${pokemon.stats[0].base_stat}</div>
+                    </div>
+
+                    <p>Attack:</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[1].base_stat}%;">${pokemon.stats[1].base_stat}</div>
+                    </div>
+
+                    <p>Defense:</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[2].base_stat}%;">${pokemon.stats[2].base_stat}</div>
+                    </div>
+
+                    <p>Special Attack:</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[3].base_stat}%;">${pokemon.stats[3].base_stat}</div>
+                    </div>
+
+                    <p>Special Defense:</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[4].base_stat}%;">${pokemon.stats[4].base_stat}</div>
+                    </div>
+
+                    <p>Speed:</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[5].base_stat}%;">${pokemon.stats[5].base_stat}</div>
+                    </div>
+                </div>
             </div>
             
             <div id="evolution-tab" class="tab-content">
@@ -163,11 +182,10 @@ function showTab(tabName) {
 
 function showLoadingSpinner() {
     document.getElementById('loading-spinner').classList.remove('d-none');
-    document.getElementById('load-more-btn').disabled = true;
+    document.getElementById('load-more-buton').disabled = true;
 }
 
 function hideLoadingSpinner() {
     document.getElementById('loading-spinner').classList.add('d-none');
-    document.getElementById('load-more-btn').disabled = false;
+    document.getElementById('load-more-buton').disabled = false;
 }
-
