@@ -1,6 +1,7 @@
 const BASE_URL = "https://pokeapi.co/api/v2/";
 let currentOffset = 0;
 const LIMIT = 20;
+let loadingCount = 0;
 let allPokemonData = [];
 
 async function onloadFunc() {
@@ -35,6 +36,11 @@ async function loadPkmns() {
     hideLoadingSpinner();
     renderPokemon(pokemonDetails);
     currentOffset += LIMIT;
+    loadingCount++;
+    if (loadingCount >= 2) {
+        disableLoadMoreButton();
+    }
+
 }
 
 function renderPokemon(pokemonList) {
@@ -188,4 +194,9 @@ function showLoadingSpinner() {
 function hideLoadingSpinner() {
     document.getElementById('loading-spinner').classList.add('d-none');
     document.getElementById('load-more-buton').disabled = false;
+}
+
+function disableLoadMoreButton() {
+    let button = document.querySelector('.loading-more button');
+    button.disabled = true;
 }
