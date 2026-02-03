@@ -31,9 +31,11 @@
         <div class="loader d-none" id="loading-spinner"></div>
         <div class="loading-more" id="load-more-buton"><button onclick="loadPkmns()">LOAD MORE</button></div>
     </div>
-    <dialog class="dialog" id="dialog">
-        <div class="dialog-content" id="dialogContent"></div>
-        <div class="close-button-section"></div><button onclick="closeDialog()">CLOSE</button>
+    <dialog class="dialog" id="dialog" onclick="closeDialog()">
+        <div class="dialog-content" id="dialogContent" onclick="event.stopPropagation()"></div>
+        <div class="button-section"><button onclick="event.stopPropagation()">Last</button>
+        </div><button onclick="closeDialog()">CLOSE</button>
+        <button onclick="event.stopPropagation()">Next</button>
     </dialog>
 
 
@@ -45,5 +47,3 @@
 </body>
 
 </html>
-
-
