@@ -13,7 +13,7 @@ body {
 }
 
 body.no-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .dialog {
@@ -27,9 +27,7 @@ body.no-scroll {
 
 }
 
-.dialog-content {
-
-}
+.dialog-content {}
 
 header {
   background-color: rgb(8, 33, 41);
@@ -73,16 +71,17 @@ footer {
 }
 
 .pokemon-card {
-  background-color: rgb(8, 33, 41);
+  background-color: rgb(16 71 89);
   color: white;
   height: 320px;
   width: 240px;
   cursor: pointer;
+  border-radius: 5px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .pokemon-card:hover {
-  box-shadow:  5px 10px 10px white;
+  box-shadow: 5px 10px 10px white;
   transform: scale(1.05);
 }
 
@@ -132,15 +131,17 @@ button {
 }
 
 .pokemon-types {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 0px;
+  align-items: center;
+  padding-top: 4px
 }
 
 .type-icon {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 
@@ -151,6 +152,8 @@ button {
   justify-content: space-between;
   align-items: center;
   color: white;
+  padding: 8px;
+  margin-top: 8px;
 }
 
 .pokemon-img {
@@ -161,18 +164,18 @@ button {
   align-items: center;
 }
 
-.pkm-img  {
+.pkm-img {
   height: 190px;
 }
 
 .tab-content {
-    display: none;  
-    padding: 20px;
-    color: white;
+  display: none;
+  padding: 20px;
+  color: white;
 }
 
 .tab-content.active {
-    display: block; 
+  display: block;
 }
 
 .tab-btn {
@@ -181,8 +184,8 @@ button {
 }
 
 .tab-btn.active {
-    border-bottom: 3px solid #e74c3c;  /* Roter Strich */
-    color: #e74c3c;                     /* Rote Schrift */
+  border-bottom: 3px solid #e74c3c;
+  color: #e74c3c;
 }
 
 .tab-navigation {
