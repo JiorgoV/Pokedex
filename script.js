@@ -5,10 +5,6 @@ let loadingCount = 0;
 let allPokemonData = [];
 
 async function onloadFunc() {
-    let pokemonResponse = await loadData("pokemon?limit=40&offset=0")
-    let pokemonList = pokemonResponse.results;  // das ist mein array
-    pokemonList.forEach((pokemon) => {   // hier durch das array gehen
-    });
 
     loadPkmns();
 }
@@ -71,8 +67,6 @@ function renderPokemon(pokemonList) {
             </div>
         `;
     });
-
-
 }
 
 function openDialog(pokemonId) {
@@ -94,6 +88,8 @@ function closeDialog() {
     dialog.close();
     document.body.classList.remove('no-scroll'); 
 }
+
+
 
 function getDialogContentTemplate(pokemon) {
     let dialogContent = document.getElementById('dialogContent')
