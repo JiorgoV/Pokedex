@@ -33,9 +33,10 @@
     </div>
     <dialog class="dialog" id="dialog" onclick="closeDialog()">
         <div class="dialog-content" id="dialogContent" onclick="event.stopPropagation()"></div>
-        <div class="button-section"><button onclick="event.stopPropagation()">Last</button>
-        </div><button onclick="closeDialog()">CLOSE</button>
-        <button onclick="event.stopPropagation()">Next</button>
+        <div class="button-section"><button class="arrow-buttons" onclick="event.stopPropagation(), previousPokemon()">⬅️</button>
+            <button onclick="closeDialog()">CLOSE</button>
+            <button class="arrow-buttons" onclick="event.stopPropagation(), nextPokemon()">➡️</button>
+        </div>
     </dialog>
 
 

@@ -3,6 +3,8 @@ let currentOffset = 0;
 const LIMIT = 20;
 let loadingCount = 0;
 let allPokemonData = [];
+let currentPokemon = null;
+let currentPokemonIndex = null;
 
 async function onloadFunc() {
 
@@ -72,11 +74,17 @@ function renderPokemon(pokemonList) {
 function openDialog(pokemonId) {
 
     let pokemon;
-    allPokemonData.forEach((pkmn) => {
+    let pokemonIndex;
+    allPokemonData.forEach((pkmn, index) => {
         if (pkmn.id === pokemonId) {
             pokemon = pkmn;
+            pokemonIndex = index;
         }
     });
+
+    currentPokemon = pokemon;
+    currentPokemonIndex = pokemonIndex;
+
     let dialog = document.getElementById('dialog');
     dialog.showModal();
     document.body.classList.add('no-scroll');
@@ -86,7 +94,7 @@ function openDialog(pokemonId) {
 function closeDialog() {
     let dialog = document.getElementById('dialog');
     dialog.close();
-    document.body.classList.remove('no-scroll'); 
+    document.body.classList.remove('no-scroll');
 }
 
 
@@ -180,6 +188,10 @@ function showTab(tabName) {
     document.getElementById(tabName + '-tab').classList.add('active');
 
     event.target.classList.add('active');
+
+    if (tabName === 'evolution') {
+        loadEvolutionForCurrentPokemon();
+    }
 }
 
 function showLoadingSpinner() {
@@ -195,4 +207,80 @@ function hideLoadingSpinner() {
 function disableLoadMoreButton() {
     let button = document.querySelector('.loading-more button');
     button.disabled = true;
+}
+
+async function getEvolutionChain(pokemon) {
+    let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');
+    let speciesData = await loadData(speciesUrl);
+    let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');
+    let evolutionData = await loadData(evolutionUrl);
+
+    return evolutionData.chain;
+}
+
+function getEvolutionHTML(chain) {
+    let html = '<div class="evolution-container">';
+    let baseName = chain.species.name;
+    html += `
+        <div class="evolution-stage">
+            <p>${baseName.charAt(0).toUpperCase() + baseName.slice(1)}</p>
+        </div>
+    `;
+
+    if (chain.evolves_to.length > 0) {
+        let secondName = chain.evolves_to[0].species.name;
+        html += `
+            <span class="arrow">→</span>
+            <div class="evolution-stage">
+                <p>${secondName.charAt(0).toUpperCase() + secondName.slice(1)}</p>
+            </div>
+        `;
+
+        if (chain.evolves_to[0].evolves_to.length > 0) {
+            let thirdName = chain.evolves_to[0].evolves_to[0].species.name;
+            html += `
+                <span class="arrow">→</span>
+                <div class="evolution-stage">
+                    <p>${thirdName.charAt(0).toUpperCase() + thirdName.slice(1)}</p>
+                </div>
+            `;
+        }
+
+    }
+
+    html += '</div>';
+    return html;
+}
+
+async function loadEvolutionForCurrentPokemon() {
+    let evolutionTab = document.getElementById('evolution-tab');
+    evolutionTab.innerHTML = '<p class="loading-text">Lade Evolution Chain...</p>';
+
+    let chain = await getEvolutionChain(currentPokemon);
+
+    let evolutionHTML = getEvolutionHTML(chain);
+
+    evolutionTab.innerHTML = evolutionHTML;
+}
+
+function nextPokemon() {
+    if (currentPokemonIndex < allPokemonData.length - 1) {
+        currentPokemonIndex++;  
+    } else {
+        currentPokemonIndex = 0;  
+    }
+    
+    currentPokemon = allPokemonData[currentPokemonIndex];
+    getDialogContentTemplate(currentPokemon);
+}
+
+function previousPokemon() {
+    if (currentPokemonIndex > 0) {
+        currentPokemonIndex--;  
+    } else {
+        currentPokemonIndex = allPokemonData.length - 1;  
+    }
+    
+    currentPokemon = allPokemonData[currentPokemonIndex];
+    getDialogContentTemplate(currentPokemon);
 }

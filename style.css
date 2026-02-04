@@ -21,8 +21,8 @@ body.no-scroll {
   z-index: 1;
   left: 35%;
   top: 25%;
-  height: 540px;
-  width: 480px;
+  height: 640px;
+  width: 560px;
   background-color: rgb(8, 33, 41);
 
 }
@@ -92,6 +92,11 @@ button {
   padding: 8px;
   margin: 16px;
   cursor: pointer;
+}
+
+.button-section {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .loader {
@@ -189,4 +194,46 @@ button {
 .tab-navigation {
   display: flex;
   justify-content: space-between;
+}
+
+.evolution-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+}
+
+.evolution-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    min-width: 100px;
+}
+
+.evolution-stage p {
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    color: #333;
+}
+
+.arrow {
+    font-size: 32px;
+    color: #888;
+    font-weight: bold;
+}
+
+.loading-text {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+.arrow-buttons {
+  background: none;
 }
