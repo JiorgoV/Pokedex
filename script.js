@@ -1,6 +1,6 @@
 const BASE_URL = "https://pokeapi.co/api/v2/";
 let currentOffset = 0;
-const LIMIT = 20;
+const LIMIT = 30;
 let loadingCount = 0;
 let allPokemonData = [];
 let currentPokemon = null;
@@ -72,7 +72,6 @@ function renderPokemon(pokemonList) {
 }
 
 function openDialog(pokemonId) {
-
     let pokemon;
     let pokemonIndex;
     allPokemonData.forEach((pkmn, index) => {
@@ -81,14 +80,12 @@ function openDialog(pokemonId) {
             pokemonIndex = index;
         }
     });
-
     currentPokemon = pokemon;
     currentPokemonIndex = pokemonIndex;
-
     let dialog = document.getElementById('dialog');
     dialog.showModal();
     document.body.classList.add('no-scroll');
-    getDialogContentTemplate(pokemon);
+    getDialogContentTemplates(pokemon);
 }
 
 function closeDialog() {
@@ -99,29 +96,22 @@ function closeDialog() {
 
 
 
-function getDialogContentTemplate(pokemon) {
+function getDialogContentTemplates(pokemon) {
     let dialogContent = document.getElementById('dialogContent')
     let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
     if (!gifUrl) {
         gifUrl = pokemon.sprites.front_default;
     }
     let primaryType = pokemon.types[0].type.name
-
     let typesHTML = getTypesHTML(pokemon.types);
-
     dialogContent.innerHTML = `
         <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
         <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}"></div>
         <div class="pokemon-types">${typesHTML}</div>
-
         ${getTabNavigationHTML()}
-
-        ${getMainTabHTML(pokemon)}
-            
-        ${getStatsTabHTML(pokemon)}
-            
-        ${getEvolutionTabHTML()}
-            
+        ${getMainTabHTML(pokemon)}       
+        ${getStatsTabHTML(pokemon)}    
+        ${getEvolutionTabHTML()}    
         </div>
     `
 }
@@ -173,39 +163,6 @@ async function getEvolutionChain(pokemon) {
     return evolutionData.chain;
 }
 
-function getEvolutionHTML(chain) {
-    let html = '<div class="evolution-container">';
-    let baseName = chain.species.name;
-    html += `
-        <div class="evolution-stage">
-            <p>${baseName.charAt(0).toUpperCase() + baseName.slice(1)}</p>
-        </div>
-    `;
-
-    if (chain.evolves_to.length > 0) {
-        let secondName = chain.evolves_to[0].species.name;
-        html += `
-            <span class="arrow">→</span>
-            <div class="evolution-stage">
-                <p>${secondName.charAt(0).toUpperCase() + secondName.slice(1)}</p>
-            </div>
-        `;
-
-        if (chain.evolves_to[0].evolves_to.length > 0) {
-            let thirdName = chain.evolves_to[0].evolves_to[0].species.name;
-            html += `
-                <span class="arrow">→</span>
-                <div class="evolution-stage">
-                    <p>${thirdName.charAt(0).toUpperCase() + thirdName.slice(1)}</p>
-                </div>
-            `;
-        }
-
-    }
-
-    html += '</div>';
-    return html;
-}
 
 async function loadEvolutionForCurrentPokemon() {
     let evolutionTab = document.getElementById('evolution-tab');
@@ -240,54 +197,3 @@ function previousPokemon() {
     getDialogContentTemplate(currentPokemon);
 }
 
-function getTypesHTML(types) {
-    let typesHTML = '';
-    types.forEach((type) => {
-        typesHTML += `<img src="assets/icons/${type.type.name}.svg"
-                    alt="${type.type.name}"
-                    class="type-icon"
-                    title="${type.type.name}">`;
-    })
-    return typesHTML;
-}
-
-function getTabNavigationHTML() {
-    return `<div class="tab-navigation">
-            <button class="tab-btn active" onclick="showTab('main')">Main</button>
-            <button class="tab-btn" onclick="showTab('stats')">Stats</button>
-            <button class="tab-btn" onclick="showTab('evolution')">Evolution</button>
-        </div>`;
-}
-
-function getMainTabHTML(pokemon) {
-    return `<div id="tab-content">
-            <div id="main-tab" class="tab-content active">
-                <p>Height: ${pokemon.height / 10}m</p>
-                <p>Weight: ${pokemon.weight / 10}kg</p>
-                <p>Base Experience: ${pokemon.base_experience}</p>
-            </div>`;
-}
-
-function getStatsTabHTML(pokemon) {
-    const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
-
-    let statsHTML = '';
-    pokemon.stats.forEach((stat, index) => {
-        statsHTML += `
-        <p>${statNames[index]}:</p>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
-        </div>`;
-    });
-
-    return `<div id="stats-tab" class="tab-content">
-                <div class="tab-stats">
-                    ${statsHTML}
-                </div>
-            </div>`;
-}
-function getEvolutionTabHTML() {
-    return `<div id="evolution-tab" class="tab-content">
-                <p>Evolution Chain kommt hier hin</p>
-            </div>`;
-}
