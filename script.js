@@ -107,69 +107,21 @@ function getDialogContentTemplate(pokemon) {
     }
     let primaryType = pokemon.types[0].type.name
 
-    let typesHTML = '';
-    pokemon.types.forEach((type) => {
-        typesHTML += `<img src="assets/icons/${type.type.name}.svg"
-                    alt="${type.type.name}"
-                    class="type-icon"
-                    title="${type.type.name}"></img>`;
-    });
+    let typesHTML = getTypesHTML(pokemon.types);
 
     dialogContent.innerHTML = `
         <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
         <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}"></div>
         <div class="pokemon-types">${typesHTML}</div>
 
-        <div class="tab-navigation">
-            <button class="tab-btn active" onclick="showTab('main')">Main</button>
-            <button class="tab-btn" onclick="showTab('stats')">Stats</button>
-            <button class="tab-btn" onclick="showTab('evolution')">Evolution</button>
-        </div>
+        ${getTabNavigationHTML()}
 
-        <div id="tab-content">
-            <div id="main-tab" class="tab-content active">
-                <p>Height: ${pokemon.height / 10}m</p>
-                <p>Weight: ${pokemon.weight / 10}kg</p>
-                <p>Base Experience: ${pokemon.base_experience}</p>
-            </div>
+        ${getMainTabHTML(pokemon)}
             
-            <div id="stats-tab" class="tab-content">
-                <div class="tab-stats">
-                    <p>HP:</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[0].base_stat}%;">${pokemon.stats[0].base_stat}</div>
-                    </div>
-
-                    <p>Attack:</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[1].base_stat}%;">${pokemon.stats[1].base_stat}</div>
-                    </div>
-
-                    <p>Defense:</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[2].base_stat}%;">${pokemon.stats[2].base_stat}</div>
-                    </div>
-
-                    <p>Special Attack:</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[3].base_stat}%;">${pokemon.stats[3].base_stat}</div>
-                    </div>
-
-                    <p>Special Defense:</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[4].base_stat}%;">${pokemon.stats[4].base_stat}</div>
-                    </div>
-
-                    <p>Speed:</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${pokemon.stats[5].base_stat}%;">${pokemon.stats[5].base_stat}</div>
-                    </div>
-                </div>
-            </div>
+        ${getStatsTabHTML(pokemon)}
             
-            <div id="evolution-tab" class="tab-content">
-                <p>Evolution Chain kommt hier hin</p>
-            </div>
+        ${getEvolutionTabHTML()}
+            
         </div>
     `
 }
@@ -214,6 +166,9 @@ async function getEvolutionChain(pokemon) {
     let speciesData = await loadData(speciesUrl);
     let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');
     let evolutionData = await loadData(evolutionUrl);
+
+
+
 
     return evolutionData.chain;
 }
@@ -265,22 +220,74 @@ async function loadEvolutionForCurrentPokemon() {
 
 function nextPokemon() {
     if (currentPokemonIndex < allPokemonData.length - 1) {
-        currentPokemonIndex++;  
+        currentPokemonIndex++;
     } else {
-        currentPokemonIndex = 0;  
+        currentPokemonIndex = 0;
     }
-    
+
     currentPokemon = allPokemonData[currentPokemonIndex];
     getDialogContentTemplate(currentPokemon);
 }
 
 function previousPokemon() {
     if (currentPokemonIndex > 0) {
-        currentPokemonIndex--;  
+        currentPokemonIndex--;
     } else {
-        currentPokemonIndex = allPokemonData.length - 1;  
+        currentPokemonIndex = allPokemonData.length - 1;
     }
-    
+
     currentPokemon = allPokemonData[currentPokemonIndex];
     getDialogContentTemplate(currentPokemon);
+}
+
+function getTypesHTML(types) {
+    let typesHTML = '';
+    types.forEach((type) => {
+        typesHTML += `<img src="assets/icons/${type.type.name}.svg"
+                    alt="${type.type.name}"
+                    class="type-icon"
+                    title="${type.type.name}">`;
+    })
+    return typesHTML;
+}
+
+function getTabNavigationHTML() {
+    return `<div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('main')">Main</button>
+            <button class="tab-btn" onclick="showTab('stats')">Stats</button>
+            <button class="tab-btn" onclick="showTab('evolution')">Evolution</button>
+        </div>`;
+}
+
+function getMainTabHTML(pokemon) {
+    return `<div id="tab-content">
+            <div id="main-tab" class="tab-content active">
+                <p>Height: ${pokemon.height / 10}m</p>
+                <p>Weight: ${pokemon.weight / 10}kg</p>
+                <p>Base Experience: ${pokemon.base_experience}</p>
+            </div>`;
+}
+
+function getStatsTabHTML(pokemon) {
+    const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
+
+    let statsHTML = '';
+    pokemon.stats.forEach((stat, index) => {
+        statsHTML += `
+        <p>${statNames[index]}:</p>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
+        </div>`;
+    });
+
+    return `<div id="stats-tab" class="tab-content">
+                <div class="tab-stats">
+                    ${statsHTML}
+                </div>
+            </div>`;
+}
+function getEvolutionTabHTML() {
+    return `<div id="evolution-tab" class="tab-content">
+                <p>Evolution Chain kommt hier hin</p>
+            </div>`;
 }
