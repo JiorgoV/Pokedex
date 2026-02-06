@@ -183,7 +183,7 @@ function nextPokemon() {
     }
 
     currentPokemon = allPokemonData[currentPokemonIndex];
-    getDialogContentTemplate(currentPokemon);
+    getDialogContentTemplates(currentPokemon);
 }
 
 function previousPokemon() {
@@ -194,6 +194,20 @@ function previousPokemon() {
     }
 
     currentPokemon = allPokemonData[currentPokemonIndex];
-    getDialogContentTemplate(currentPokemon);
+    getDialogContentTemplates(currentPokemon);
 }
 
+
+function searchPokemon() {
+    let input = document.querySelector('.search-bar');
+    let filter = input.value.toLowerCase();
+    let allCards = document.querySelectorAll('.pokemon-card');
+    allCards.forEach((card) => {
+        let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();
+        if (pokemonName.indexOf(filter) > -1) {
+            card.style.display = '';  
+        } else {
+            card.style.display = 'none'; 
+        }
+    });
+}
