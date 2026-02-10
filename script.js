@@ -1,8 +1,8 @@
-const BASE_URL = "https://pokeapi.co/api/v2/";
-let currentOffset = 0;
+const BASE_URL = "https://pokeapi.co/api/v2/";  // Basis-URL für alle API-Aufrufe
+let currentOffset = 0;  
 const LIMIT = 30;
 let loadingCount = 0;
-let allPokemonData = [];
+let allPokemonData = [];        // Alle Pokemon
 let currentPokemon = null;
 let currentPokemonIndex = null;
 
@@ -13,21 +13,21 @@ async function onloadFunc() {
 
 async function loadData(path = "") {
     let response = await fetch(BASE_URL + path);
-    let responseToJson = await response.json();
+    let responseToJson = await response.json();     // BASE_URL + path = "https://pokeapi.co/api/v2/" + "pokemon/25"
     return responseToJson;
 }
 
 async function loadPkmns() {
     showLoadingSpinner()
     let pokemonResponse = await loadData(`pokemon?limit=${LIMIT}&offset=${currentOffset}`);
-    let pokemonDetails = [];
+    let pokemonDetails = [];        
     for (let i = 0; i < pokemonResponse.results.length; i++) {
         let pokemon = pokemonResponse.results[i];
-        let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');
-        let details = await loadData(shortUrl);
-        pokemonDetails.push(details);
+        let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/")
+        let details = await loadData(shortUrl);     // Details laden
+        pokemonDetails.push(details);           // Details hinzufügen
         pokemonDetails.forEach((pokemon) => {
-            allPokemonData.push(pokemon);
+            allPokemonData.push(pokemon);       // In globales Array gespeichert, um auf alle geladenen Pokemon zuzugreifen.
         });
     }
 
@@ -51,10 +51,10 @@ function renderPokemon(pokemonList) {
         if (!gifUrl) {
             gifUrl = pokemon.sprites.front_default;
         }
-        let primaryType = pokemon.types[0].type.name;
+        let primaryType = pokemon.types[0].type.name;       // hole den ersten Typ des Pokemon(fire, water usw) Array -> pokemon.types[0]
 
         let typesHTML = '';
-        pokemon.types.forEach((type) => {
+        pokemon.types.forEach((type) => {       // durch jedej Typen gehen falls 2 vorhanden sind
             typesHTML += `<img src="assets/icons/${type.type.name}.svg"
                     alt="${type.type.name}"
                     class="type-icon"
@@ -80,8 +80,8 @@ function openDialog(pokemonId) {
             pokemonIndex = index;
         }
     });
-    currentPokemon = pokemon;
-    currentPokemonIndex = pokemonIndex;
+    currentPokemon = pokemon;       // global speichern um darauf zuzugreifen z.B. Evolution
+    currentPokemonIndex = pokemonIndex;     // Index global speichern, so kann ich vor-zurück navigieren
     let dialog = document.getElementById('dialog');
     dialog.showModal();
     document.body.classList.add('no-scroll');
@@ -96,7 +96,7 @@ function closeDialog() {
 
 
 
-function getDialogContentTemplates(pokemon) {
+function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene Pokemon von openDialog()
     let dialogContent = document.getElementById('dialogContent')
     let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
     if (!gifUrl) {
@@ -117,7 +117,7 @@ function getDialogContentTemplates(pokemon) {
 }
 
 function showTab(tabName) {
-    let allTabs = document.querySelectorAll('.tab-content');
+    let allTabs = document.querySelectorAll('.tab-content');       // Alle Tab-Inhalte (Main, Stats, Evolution)
     allTabs.forEach((tab) => {
         tab.classList.remove('active');
     });
@@ -128,8 +128,6 @@ function showTab(tabName) {
     });
 
     document.getElementById(tabName + '-tab').classList.add('active');
-
-    event.target.classList.add('active');
 
     if (tabName === 'evolution') {
         loadEvolutionForCurrentPokemon();
@@ -152,15 +150,12 @@ function disableLoadMoreButton() {
 }
 
 async function getEvolutionChain(pokemon) {
-    let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');
-    let speciesData = await loadData(speciesUrl);
-    let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');
-    let evolutionData = await loadData(evolutionUrl);
+    let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');     // Species Url holen und kürzen -> nach replace: "pokemon-species/1/"
+    let speciesData = await loadData(speciesUrl);       // Species-Daten laden -> da ist evolution-chain drin
+    let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');   // Evolution-Chain holen und kürzen -> nach replace: "evolution-chain/1/"
+    let evolutionData = await loadData(evolutionUrl);       // Evolution-cahin daten laden
 
-
-
-
-    return evolutionData.chain;
+    return evolutionData.chain;     // nur Chain zurückgeben
 }
 
 

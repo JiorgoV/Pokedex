@@ -1,7 +1,7 @@
 function getTypesHTML(types) {
     let typesHTML = '';
     types.forEach((type) => {
-        typesHTML += `<img src="assets/icons/${type.type.name}.svg"
+        typesHTML += `<img src="assets/icons/${type.type.name}.svg"    
                     alt="${type.type.name}"
                     class="type-icon"
                     title="${type.type.name}">`;
@@ -28,7 +28,6 @@ function getMainTabHTML(pokemon) {
 
 function getStatsTabHTML(pokemon) {
     const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
-
     let statsHTML = '';
     pokemon.stats.forEach((stat, index) => {
         statsHTML += `
@@ -37,7 +36,6 @@ function getStatsTabHTML(pokemon) {
             <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
         </div>`;
     });
-
     return `<div id="stats-tab" class="tab-content">
                 <div class="tab-stats">
                     ${statsHTML}
@@ -75,9 +73,7 @@ function getEvolutionHTML(chain) {
                 </div>
             `;
         }
-
     }
-
     html += '</div>';
     return html;
 }
