@@ -33,7 +33,9 @@ body.no-scroll {
 }
 
 header {
-  background-color: rgb(8, 33, 41);
+  /* background-color: rgb(8, 33, 41); */
+  /* background-image: url(./assets/img/pokemonball.jpg); */
+  background-image: linear-gradient(to top, red, white);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,7 +50,8 @@ footer {
 }
 
 .main-content {
-  background-color: rgb(5, 23, 30);
+  /* background-color: rgb(5, 23, 30); */
+  background-image: url(./assets/img/pokemonball.jpg);
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -76,13 +79,17 @@ footer {
 }
 
 .pokemon-card {
-  background-color: rgb(16 71 89);
+  /* background-color: rgb(16 71 89); */
+  background-color: #ffc107;
   color: white;
-  height: 320px;
+  height: 340px;
   width: 240px;
   cursor: pointer;
   border-radius: 5px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-style: solid;
+  border-color: #08449e;
+  border-width: 8px;
 }
 
 .pokemon-card:hover {
