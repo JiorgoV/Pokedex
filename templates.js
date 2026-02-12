@@ -31,8 +31,8 @@ function getStatsTabHTML(pokemon) {
     let statsHTML = '';
     pokemon.stats.forEach((stat, index) => {
         statsHTML += `
-        <p>${statNames[index]}:</p>
         <div class="progress">
+            <p>${statNames[index]}:</p>
             <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
         </div>`;
     });

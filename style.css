@@ -24,11 +24,20 @@ body.no-scroll {
 .dialog {
   position: fixed;
   z-index: 1;
-  left: 35%;
-  top: 25%;
-  height: 640px;
-  width: 560px;
-  background-color: rgb(8, 33, 41);
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 148px;
+  height: 680px;
+  overflow-y: auto;
+  width: 90%;
+  max-width: 560px;
+  /* background-color: rgb(8, 33, 41); */
+  background-image: url(./assets/img/pokemonball.jpg);
+  border-style: solid;
+  border-color: #08449e;
+  border-width: 8px;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 }
 
@@ -45,8 +54,10 @@ header {
 }
 
 footer {
-  background-color: rgb(8, 33, 41);
-  height: 128px;
+  height: 60px;
+  width: 100%;
+  max-width: 1920px;
+  background-image: linear-gradient(to top, red, white);
 }
 
 .main-content {
@@ -57,6 +68,8 @@ footer {
   gap: 20px;
   padding: 20px;
   justify-content: center;
+  width: 100%;
+  max-width: 1920px;
 
 
 }
@@ -86,20 +99,21 @@ footer {
   width: 240px;
   cursor: pointer;
   border-radius: 5px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-style: solid;
   border-color: #08449e;
   border-width: 8px;
 }
 
 .pokemon-card:hover {
-  box-shadow: 5px 10px 10px white;
+  box-shadow: 12px 12px 8px white;
   transform: scale(1.05);
 }
 
 .loading-more {
   display: flex;
   justify-content: center;
+
 }
 
 button {
@@ -144,7 +158,11 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(5, 23, 30);
+  height: auto;
+  width: 100%;
+  max-width: 1920px;
+  background-image: linear-gradient(to bottom, red, white);
+  padding: 24px 0 32px 0;
 }
 
 .pokemon-types {
@@ -210,6 +228,16 @@ button {
   justify-content: space-between;
 }
 
+.tab-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-tab {
+  color: black;
+}
+
 .evolution-container {
   display: flex;
   align-items: center;
@@ -252,14 +280,12 @@ button {
   background: none;
 }
 
-@media(min-width: 320px) and (max-width: 768px) {
+@media(min-width: 320px) and (max-width: 768px) {}
 
-}
+@media(min-width: 768px) and (max-width: 1024px) {}
 
-@media(min-width: 768px) and (max-width: 1024px) {
+@media(min-width: 1024px) and (max-width: 1920px) {}
 
-}
-
-@media(min-width: 1024px) and (max-width: 1920px) {
+.progress {
 
 }
