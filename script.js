@@ -136,17 +136,22 @@ function showTab(tabName) {
 
 function showLoadingSpinner() {
     document.getElementById('loading-spinner').classList.remove('d-none');
-    document.getElementById('load-more-buton').disabled = true;
+    disableLoadMoreButton();
 }
 
 function hideLoadingSpinner() {
     document.getElementById('loading-spinner').classList.add('d-none');
-    document.getElementById('load-more-buton').disabled = false;
+    enableLoadMoreButton();
 }
 
 function disableLoadMoreButton() {
     let button = document.querySelector('.loading-more button');
     button.disabled = true;
+}
+
+function enableLoadMoreButton() {
+    let button = document.querySelector('.loading-more button');
+    button.disabled = false;
 }
 
 async function getEvolutionChain(pokemon) {

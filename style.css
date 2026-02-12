@@ -286,6 +286,7 @@ button {
 
 @media(min-width: 1024px) and (max-width: 1920px) {}
 
-.progress {
-
+.progress-row {
+  color: black;
+  gap: 24px;
 }
