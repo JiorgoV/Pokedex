@@ -85,6 +85,7 @@ function openDialog(pokemonId) {
     let dialog = document.getElementById('dialog');
     dialog.showModal();
     document.body.classList.add('no-scroll');
+    document.getElementById('main-content').classList.add('blur');
     getDialogContentTemplates(pokemon);
 }
 
@@ -92,6 +93,7 @@ function closeDialog() {
     let dialog = document.getElementById('dialog');
     dialog.close();
     document.body.classList.remove('no-scroll');
+    document.getElementById('main-content').classList.remove('blur');
 }
 
 

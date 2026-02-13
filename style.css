@@ -41,6 +41,11 @@ body.no-scroll {
 
 }
 
+.blur {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+
 header {
   /* background-color: rgb(8, 33, 41); */
   /* background-image: url(./assets/img/pokemonball.jpg); */
