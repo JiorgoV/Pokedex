@@ -23,7 +23,7 @@ async function loadPkmns() {
     let pokemonDetails = [];        
     for (let i = 0; i < pokemonResponse.results.length; i++) {
         let pokemon = pokemonResponse.results[i];
-        let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/")
+        let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/") so bleibt nur z.b. "pokemon/17"
         let details = await loadData(shortUrl);     // Details laden
         pokemonDetails.push(details);           // Details hinzufügen
         pokemonDetails.forEach((pokemon) => {
@@ -154,7 +154,7 @@ function enableLoadMoreButton() {
     button.disabled = false;
 }
 
-async function getEvolutionChain(pokemon) {
+async function getEvolutionChain(pokemon) {         // komplettes objekt currentPokemon
     let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');     // Species Url holen und kürzen -> nach replace: "pokemon-species/1/"
     let speciesData = await loadData(speciesUrl);       // Species-Daten laden -> da ist evolution-chain drin
     let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');   // Evolution-Chain holen und kürzen -> nach replace: "evolution-chain/1/"

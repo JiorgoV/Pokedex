@@ -280,9 +280,41 @@ button {
   background: none;
 }
 
-@media(min-width: 320px) and (max-width: 768px) {}
+@media(min-width: 320px) and (max-width: 768px) {
+  .dialog {
+    height: 400px;
+  }
 
-@media(min-width: 768px) and (max-width: 1024px) {}
+  .pokeball {
+    display: none;
+  }
+
+  .search-bar {
+    display: none;
+  }
+
+  .headline {
+    font-size: 48px;
+  }
+
+  .pokemon-img {
+    height: 96px;
+  }
+
+  .pkm-img {
+    height: 88px;
+  }
+}
+
+@media(min-width: 768px) and (max-width: 1024px) {
+  .headline {
+    font-size: 48px;
+  }
+
+  .search-bar {
+    width: 240px;
+  }
+}
 
 @media(min-width: 1024px) and (max-width: 1920px) {}
 
