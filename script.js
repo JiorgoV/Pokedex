@@ -159,9 +159,12 @@ function enableLoadMoreButton() {
 async function getEvolutionChain(pokemon) {         // komplettes objekt currentPokemon
     let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');     // Species Url holen und kürzen -> nach replace: "pokemon-species/1/"
     let speciesData = await loadData(speciesUrl);       // Species-Daten laden -> da ist evolution-chain drin
+    console.log(speciesData);
+    
     let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');   // Evolution-Chain holen und kürzen -> nach replace: "evolution-chain/1/"
     let evolutionData = await loadData(evolutionUrl);       // Evolution-cahin daten laden
-
+    console.log(evolutionData);
+    
     return evolutionData.chain;     // nur Chain zurückgeben
 }
 

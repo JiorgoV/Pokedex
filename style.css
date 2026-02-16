@@ -176,7 +176,8 @@ button {
   justify-content: center;
   margin-top: 0px;
   align-items: center;
-  padding-top: 4px
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .type-icon {
@@ -189,11 +190,13 @@ button {
   height: 32px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
   align-items: center;
   color: white;
   padding: 8px;
   margin-top: 8px;
+  
 }
 
 .pokemon-img {
@@ -221,6 +224,7 @@ button {
 .tab-btn {
   width: 25%;
   margin: 0;
+  border: none;
 }
 
 .tab-btn.active {
@@ -230,7 +234,9 @@ button {
 
 .tab-navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 8px;
+  background-color: #f1f0f0;
 }
 
 .tab-stats {
@@ -295,7 +301,13 @@ button {
   }
 
   .search-bar {
-    display: none;
+    
+  }
+
+  header {
+    flex-direction: column;
+    padding-bottom:16px;
+    padding-top: 16px;
   }
 
   .headline {
@@ -308,6 +320,14 @@ button {
 
   .pkm-img {
     height: 88px;
+  }
+
+  .pokemon-card{
+    height: 232px;
+  }
+
+  .id-name {
+    padding-right: 104px;
   }
 }
 
