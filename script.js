@@ -43,11 +43,10 @@ async function loadPkmns() {
 
 function renderPokemon(pokemonList) {
     let mainContent = document.getElementById('main-content');
-
     pokemonList.forEach((pokemon) => {
         let imageUrl = pokemon.sprites.front_default;
         let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
-
+        
         if (!gifUrl) {
             gifUrl = pokemon.sprites.front_default;
         }
@@ -96,8 +95,6 @@ function closeDialog() {
     document.getElementById('main-content').classList.remove('blur');
 }
 
-
-
 function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene Pokemon von openDialog()
     let dialogContent = document.getElementById('dialogContent')
     let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
@@ -118,7 +115,7 @@ function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene P
     `
 }
 
-function showTab(tabName) {
+function showTab(tabName, event) {
     let allTabs = document.querySelectorAll('.tab-content');       // Alle Tab-Inhalte (Main, Stats, Evolution)
     allTabs.forEach((tab) => {
         tab.classList.remove('active');
@@ -130,6 +127,8 @@ function showTab(tabName) {
     });
 
     document.getElementById(tabName + '-tab').classList.add('active');
+
+    event.target.classList.add('active');
 
     if (tabName === 'evolution') {
         loadEvolutionForCurrentPokemon();

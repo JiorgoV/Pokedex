@@ -11,9 +11,9 @@ function getTypesHTML(types) {
 
 function getTabNavigationHTML() {
     return `<div class="tab-navigation">
-            <button class="tab-btn active" onclick="showTab('main')">Main</button>
-            <button class="tab-btn" onclick="showTab('stats')">Stats</button>
-            <button class="tab-btn" onclick="showTab('evolution')">Evolution</button>
+            <button class="tab-btn active" onclick="showTab('main', event)">Main</button>
+            <button class="tab-btn" onclick="showTab('stats', event)">Stats</button>
+            <button class="tab-btn" onclick="showTab('evolution', event)">Evolution</button>
         </div>`;
 }
 
@@ -31,9 +31,13 @@ function getStatsTabHTML(pokemon) {
     let statsHTML = '';
     pokemon.stats.forEach((stat, index) => {
         statsHTML += `
-        <div class="progress progress-row">
-            <p>${statNames[index]}:</p>
-            <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
+        <div class="stats-row">
+            <div class="stat-names">
+                <p>${statNames[index]}:</p>
+            </div>
+            <div class="progress progress-row">
+                <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
+            </div>
         </div>`;
     });
     return `<div id="stats-tab" class="tab-content">
