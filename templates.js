@@ -53,31 +53,36 @@ function getEvolutionTabHTML() {
 }
 
 function getEvolutionHTML(chain) {
-    let html = '<div class="evolution-container">';
-    let baseName = chain.species.name;
-    html += `
-        <div class="evolution-stage">
-            <p>${baseName.charAt(0).toUpperCase() + baseName.slice(1)}</p>
-        </div>
-    `;
-    if (chain.evolves_to.length > 0) {
-        let secondName = chain.evolves_to[0].species.name;
+    if (!chain) return '<p>Keine Evolution Chain verfügbar</p>';
+
+    let names = [chain.species.name];  // erste Evolution
+
+    if (chain.evolves_to[0]) {          // schauen ob es zweite Evo gibt
+        names.push(chain.evolves_to[0].species.name);
+    }
+
+    if (chain.evolves_to[0].evolves_to[0]) {        // dritte Evo 
+        names.push(chain.evolves_to[0].evolves_to[0].species.name);  // jetzt sieht das array so aus. names = ["bulbasaur", "ivysaur", "venusaur"]
+    }
+
+     let html = '<div class="evolution-container">';
+
+     names.forEach((name, i) => {
+        if (i > 0) html += '<span class="arrow">→</span>';
+        let sprite = getPokemonSpritesByName(name);
+
+        let imgHTML = `<img src="${sprite}" alt="${name}">`;
+
         html += `
-            <span class="arrow">→</span>
             <div class="evolution-stage">
-                <p>${secondName.charAt(0).toUpperCase() + secondName.slice(1)}</p>
+                ${imgHTML}
+                <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
             </div>
         `;
-        if (chain.evolves_to[0].evolves_to.length > 0) {
-            let thirdName = chain.evolves_to[0].evolves_to[0].species.name;
-            html += `
-                <span class="arrow">→</span>
-                <div class="evolution-stage">
-                    <p>${thirdName.charAt(0).toUpperCase() + thirdName.slice(1)}</p>
-                </div>
-            `;
-        }
-    }
-    html += '</div>';
-    return html;
+     });
+
+     html += '</div>';
+
+     return html;
 }
+

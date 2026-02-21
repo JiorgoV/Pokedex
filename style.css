@@ -8,6 +8,22 @@ a {
   text-decoration: none;
 }
 
+h1 {
+  color: yellow;
+  -webkit-text-stroke: 3px blue;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.headline {
+  color: #fdc51c;
+  font-size: 104px;
+  font-family: "Cherry Bomb One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  padding-top: 16px;
+}
+
+
 body {
   background-color: rgb(5, 23, 30) !important;
   max-width: 1920px;
@@ -89,11 +105,6 @@ footer {
   width: 320px;
   margin-right: 32px;
   border-radius: 8px;
-}
-
-.headline {
-  color: white;
-  font-size: 80px;
 }
 
 .pokemon-card {
@@ -305,8 +316,9 @@ button {
 
 .arrow {
   font-size: 48px;
-  color: red;
+  color: #00ceff;
   font-weight: bold;
+  font-family: "Cherry Bomb One", system-ui;
 }
 
 .loading-text {
@@ -325,7 +337,6 @@ button {
   height: 40px;
 }
 
-
 @media(min-width: 320px) and (max-width: 768px) {
   .dialog {
     height: 400px;
@@ -335,7 +346,9 @@ button {
     display: none;
   }
 
-  .search-bar {}
+  /* .search-bar {
+
+  } */
 
   header {
     flex-direction: column;
@@ -362,6 +375,24 @@ button {
   .id-name {
     padding-right: 104px;
   }
+
+
+}
+
+@media(min-width: 320px) and (max-width: 550px) {
+  .evolution-container {
+    flex-direction: column;
+  }
+
+  .arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media(min-width: 550px) and (max-width: 768px) {
+  .dialog {
+    height: 640px;
+  }
 }
 
 @media(min-width: 768px) and (max-width: 1024px) {
@@ -372,6 +403,7 @@ button {
   .search-bar {
     width: 240px;
   }
+
 }
 
 @media(min-width: 1024px) and (max-width: 1920px) {}

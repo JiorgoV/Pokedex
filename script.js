@@ -215,3 +215,9 @@ function searchPokemon() {
         }
     });
 }
+
+function getPokemonSpritesByName(name) {
+    let pokemon = allPokemonData.find(p => p.name === name);
+
+    return pokemon.sprites.front_default;
+}
