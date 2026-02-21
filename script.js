@@ -105,7 +105,9 @@ function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene P
     let typesHTML = getTypesHTML(pokemon.types);
     dialogContent.innerHTML = `
         <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
-        <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}"></div>
+        <div class="pokemon-img ${primaryType}"><button class="arrow-buttons"onclick="event.stopPropagation(), previousPokemon()">⬅️</button>
+        <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}">
+        <button class="arrow-buttons" onclick="event.stopPropagation(), nextPokemon()">➡️</button></div>
         <div class="pokemon-types">${typesHTML}</div>
         ${getTabNavigationHTML()}
         ${getMainTabHTML(pokemon)}       

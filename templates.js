@@ -76,7 +76,7 @@ function getEvolutionHTML(chain) {
         html += `
             <div class="evolution-stage">
                 ${imgHTML}
-                <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
+                <div class="evolution-names"><p>${name.charAt(0).toUpperCase() + name.slice(1)}</p></div>
             </div>
         `;
      });
