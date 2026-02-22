@@ -208,14 +208,18 @@ function searchPokemon() {
     let input = document.querySelector('.search-bar');
     let filter = input.value.toLowerCase();
     let allCards = document.querySelectorAll('.pokemon-card');
+    if (filter.length < 3) {
+        allCards.forEach((card) => {
+            card.style.display = '';
+        });
+        return;}
     allCards.forEach((card) => {
         let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();
         if (pokemonName.indexOf(filter) > -1) {
             card.style.display = '';  
         } else {
             card.style.display = 'none'; 
-        }
-    });
+        }});
 }
 
 function getPokemonSpritesByName(name) {
