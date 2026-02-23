@@ -65,14 +65,15 @@ function getEvolutionHTML(chain) {
         names.push(chain.evolves_to[0].evolves_to[0].species.name);  // jetzt sieht das array so aus. names = ["bulbasaur", "ivysaur", "venusaur"]
     }
 
-     let html = '<div class="evolution-container">';
+    return getEvolutionStagesHTML(names);
+}
 
+function getEvolutionStagesHTML(names) {
+    let html = '<div class="evolution-container">';
      names.forEach((name, i) => {
         if (i > 0) html += '<span class="arrow">→</span>';
         let sprite = getPokemonSpritesByName(name);
-
         let imgHTML = `<img src="${sprite}" alt="${name}">`;
-
         html += `
             <div class="evolution-stage">
                 ${imgHTML}
@@ -80,9 +81,6 @@ function getEvolutionHTML(chain) {
             </div>
         `;
      });
-
      html += '</div>';
-
      return html;
 }
-
