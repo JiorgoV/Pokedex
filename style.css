@@ -337,9 +337,10 @@ button {
 }
 
 .close-button {
+  font-family: "Cherry Bomb One", system-ui;
   height: 40px;
   width: 80px;
-  background-color: #00ceff;
+  background-color: rgb(183,52,51);
   border-radius: 16px;
   padding: 8px;
 }
@@ -418,4 +419,21 @@ button {
 .progress-row {
   color: black;
   gap: 24px;
+}
+
+.no-results {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    padding: 40px;
+    margin: 20px auto;
+}
+
+.load-button {
+  font-family: "Cherry Bomb One", system-ui;
+  height: 48px;
+  width: 120px;
+  background-color: rgb(245, 82, 82);
+  border-radius: 16px;
+  padding: 8px;
 }

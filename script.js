@@ -208,18 +208,27 @@ function searchPokemon() {
     let input = document.querySelector('.search-bar');
     let filter = input.value.toLowerCase();
     let allCards = document.querySelectorAll('.pokemon-card');
+    let noResults = document.getElementById('no-results');
     if (filter.length < 3) {
         allCards.forEach((card) => {
             card.style.display = '';
         });
         return;}
+    let foundPokemon = 0;
     allCards.forEach((card) => {
         let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();
         if (pokemonName.indexOf(filter) > -1) {
-            card.style.display = '';  
+            card.style.display = ''; 
+            foundPokemon++; 
         } else {
             card.style.display = 'none'; 
         }});
+
+    if (foundPokemon === 0) {
+        noResults.classList.remove('d-none'); 
+    } else {
+        noResults.classList.add('d-none');
+    }
 }
 
 function getPokemonSpritesByName(name) {
