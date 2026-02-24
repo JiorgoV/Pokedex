@@ -21,6 +21,7 @@ h1 {
   font-weight: 400;
   font-style: normal;
   padding-top: 16px;
+  text-decoration: none;
 }
 
 
@@ -426,7 +427,6 @@ button {
     font-size: 24px;
     color: white;
     padding: 40px;
-    margin: 20px auto;
 }
 
 .load-button {

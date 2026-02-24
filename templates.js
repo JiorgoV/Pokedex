@@ -1,3 +1,17 @@
+function getDialogHeaderHTML(pokemon, gifUrl, primaryType) {
+    return `
+        <div class="id-name">
+            <h3>#${pokemon.id}</h3>
+            <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
+        </div>
+        <div class="pokemon-img ${primaryType}">
+            <button class="arrow-buttons" onclick="event.stopPropagation(), previousPokemon()">⬅️</button>
+            <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}">
+            <button class="arrow-buttons" onclick="event.stopPropagation(), nextPokemon()">➡️</button>
+        </div>
+    `;
+}
+
 function getTypesHTML(types) {
     let typesHTML = '';
     types.forEach((type) => {
@@ -26,20 +40,22 @@ function getMainTabHTML(pokemon) {
             </div>`;
 }
 
+function getStatsRowHTML(statName, statValue) {
+    return `<div class="stats-row">
+            <div class="stat-names">
+                <p>${statName}:</p>
+            </div>
+            <div class="progress progress-row">
+                <div class="progress-bar" role="progressbar" style="width: ${statValue}%;">${statValue}</div>
+            </div>
+        </div>`;
+}
+
 function getStatsTabHTML(pokemon) {
     const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
     let statsHTML = '';
     pokemon.stats.forEach((stat, index) => {
-        statsHTML += `
-        <div class="stats-row">
-            <div class="stat-names">
-                <p>${statNames[index]}:</p>
-            </div>
-            <div class="progress progress-row">
-                <div class="progress-bar" role="progressbar" style="width: ${stat.base_stat}%;">${stat.base_stat}</div>
-            </div>
-        </div>`;
-    });
+        statsHTML += getStatsRowHTML(statNames[index], stat.base_stat);});
     return `<div id="stats-tab" class="tab-content">
                 <div class="tab-stats">
                     ${statsHTML}
@@ -48,23 +64,19 @@ function getStatsTabHTML(pokemon) {
 }
 function getEvolutionTabHTML() {
     return `<div id="evolution-tab" class="tab-content">
-                <p>Evolution Chain kommt hier hin</p>
+                <p>Evolutionchain loading...</p>
             </div>`;
 }
 
 function getEvolutionHTML(chain) {
-    if (!chain) return '<p>Keine Evolution Chain verfügbar</p>';
-
+    if (!chain) return '<p>No Evolutionchain available</p>';
     let names = [chain.species.name];  // erste Evolution
-
     if (chain.evolves_to[0]) {          // schauen ob es zweite Evo gibt
         names.push(chain.evolves_to[0].species.name);
     }
-
     if (chain.evolves_to[0].evolves_to[0]) {        // dritte Evo 
         names.push(chain.evolves_to[0].evolves_to[0].species.name);  // jetzt sieht das array so aus. names = ["bulbasaur", "ivysaur", "venusaur"]
     }
-
     return getEvolutionStagesHTML(names);
 }
 
@@ -78,9 +90,7 @@ function getEvolutionStagesHTML(names) {
             <div class="evolution-stage">
                 ${imgHTML}
                 <div class="evolution-names"><p>${name.charAt(0).toUpperCase() + name.slice(1)}</p></div>
-            </div>
-        `;
-     });
+            </div>`;});
      html += '</div>';
      return html;
 }

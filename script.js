@@ -20,25 +20,29 @@ async function loadData(path = "") {
 async function loadPkmns() {
     showLoadingSpinner()
     let pokemonResponse = await loadData(`pokemon?limit=${LIMIT}&offset=${currentOffset}`);
+    let pokemonDetails = await fetchPokemonDetails(pokemonResponse.results);
+    hideLoadingSpinner();
+    renderPokemon(pokemonDetails);
+    updateLoadingSpinner();
+}
+
+async function fetchPokemonDetails(pokemonList) {
     let pokemonDetails = [];        
     for (let i = 0; i < pokemonResponse.results.length; i++) {
-        let pokemon = pokemonResponse.results[i];
+        let pokemon = pokemonList[i];
         let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/") so bleibt nur z.b. "pokemon/17"
         let details = await loadData(shortUrl);     // Details laden
         pokemonDetails.push(details);           // Details hinzufügen
-        pokemonDetails.forEach((pokemon) => {
-            allPokemonData.push(pokemon);       // In globales Array gespeichert, um auf alle geladenen Pokemon zuzugreifen.
-        });
+        allPokemonData.push(details);           // forEach entfernt weil
     }
+}
 
-    hideLoadingSpinner();
-    renderPokemon(pokemonDetails);
+function updateLoadingSpinner() {
     currentOffset += LIMIT;
     loadingCount++;
     if (loadingCount >= 2) {
         disableLoadMoreButton();
     }
-
 }
 
 function renderPokemon(pokemonList) {
@@ -104,17 +108,14 @@ function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene P
     let primaryType = pokemon.types[0].type.name
     let typesHTML = getTypesHTML(pokemon.types);
     dialogContent.innerHTML = `
-        <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
-        <div class="pokemon-img ${primaryType}"><button class="arrow-buttons"onclick="event.stopPropagation(), previousPokemon()">⬅️</button>
-        <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}">
-        <button class="arrow-buttons" onclick="event.stopPropagation(), nextPokemon()">➡️</button></div>
+        ${getDialogHeaderHTML(pokemon, gifUrl, primaryType)}
         <div class="pokemon-types">${typesHTML}</div>
         ${getTabNavigationHTML()}
         ${getMainTabHTML(pokemon)}       
         ${getStatsTabHTML(pokemon)}    
         ${getEvolutionTabHTML()}    
         </div>
-    `
+    `;
 }
 
 function showTab(tabName, event) {
@@ -122,16 +123,12 @@ function showTab(tabName, event) {
     allTabs.forEach((tab) => {
         tab.classList.remove('active');
     });
-
     let allButtons = document.querySelectorAll('.tab-btn');
     allButtons.forEach((btn) => {
         btn.classList.remove('active');
     });
-
     document.getElementById(tabName + '-tab').classList.add('active');
-
     event.target.classList.add('active');
-
     if (tabName === 'evolution') {
         loadEvolutionForCurrentPokemon();
     }
@@ -209,30 +206,46 @@ function searchPokemon() {
     let filter = input.value.toLowerCase();
     let allCards = document.querySelectorAll('.pokemon-card');
     let noResults = document.getElementById('no-results');
-    if (filter.length < 3) {
-        allCards.forEach((card) => {
-            card.style.display = '';
-        });
+    if (filter.length < 3) {            // wenn weniger als 3 buchstaben --> alle Karten anzeigen
+            showAllPokemonCards(allCards, noResults)
         return;}
-    let foundPokemon = 0;
-    allCards.forEach((card) => {
-        let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();
-        if (pokemonName.indexOf(filter) > -1) {
-            card.style.display = ''; 
-            foundPokemon++; 
-        } else {
-            card.style.display = 'none'; 
-        }});
+    
+        let foundPokemon = filterPokemonCards(allCards, filter);
+        toggleNoResultsMessage(noResults, foundPokemon);
 
-    if (foundPokemon === 0) {
-        noResults.classList.remove('d-none'); 
-    } else {
-        noResults.classList.add('d-none');
-    }
 }
 
 function getPokemonSpritesByName(name) {
-    let pokemon = allPokemonData.find(p => p.name === name);
+    let pokemon = allPokemonData.find(pkmn => pkmn.name === name);
 
     return pokemon.sprites.front_default;
+}
+
+function filterPokemonCards(allCards, filter) {
+    let foundPokemon = 0;
+    allCards.forEach((card) => {        // durch jede PokemonKarte gehen
+        let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();       // hole den Namen
+        if (pokemonName.indexOf(filter) > -1) {         // Prüfe ob suchbergriff(filter) im Namen vorkommt. IndexOf() gibt Position zurück oder -1(nicht gefunden)!
+            card.style.display = ''; 
+            foundPokemon++; 
+        } else {
+            card.style.display = 'none';        // wenn nichts gefunden --> verstecke die Karten
+        }});
+
+    return foundPokemon;
+}
+
+function toggleNoResultsText(foundPokemon, noResults) {
+    if (foundPokemon === 0) {
+        noResults.classList.remove('d-none');
+    } else {
+        noResults.classList.remove('d-none');
+    }
+}
+
+function showAllPokemonCards(allCards, noResults) {
+    allCards.forEach((card) => {
+            card.style.display = '';
+        });
+        noResults.classList.add('d-none');   // text verstecken
 }
