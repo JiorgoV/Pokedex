@@ -18,7 +18,7 @@ async function loadData(path = "") {
 }
 
 async function loadPkmns() {
-    showLoadingSpinner()
+    showLoadingSpinner();
     let pokemonResponse = await loadData(`pokemon?limit=${LIMIT}&offset=${currentOffset}`);
     let pokemonDetails = await fetchPokemonDetails(pokemonResponse.results);
     hideLoadingSpinner();
@@ -28,13 +28,14 @@ async function loadPkmns() {
 
 async function fetchPokemonDetails(pokemonList) {
     let pokemonDetails = [];        
-    for (let i = 0; i < pokemonResponse.results.length; i++) {
+    for (let i = 0; i < pokemonList.length; i++) {
         let pokemon = pokemonList[i];
         let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/") so bleibt nur z.b. "pokemon/17"
         let details = await loadData(shortUrl);     // Details laden
         pokemonDetails.push(details);           // Details hinzufügen
         allPokemonData.push(details);           // forEach entfernt weil
     }
+    return pokemonDetails;
 }
 
 function updateLoadingSpinner() {
@@ -211,7 +212,7 @@ function searchPokemon() {
         return;}
     
         let foundPokemon = filterPokemonCards(allCards, filter);
-        toggleNoResultsMessage(noResults, foundPokemon);
+        toggleNoResultsText(noResults, foundPokemon);
 
 }
 
@@ -235,17 +236,17 @@ function filterPokemonCards(allCards, filter) {
     return foundPokemon;
 }
 
-function toggleNoResultsText(foundPokemon, noResults) {
+function toggleNoResultsText(noResults, foundPokemon) {
     if (foundPokemon === 0) {
         noResults.classList.remove('d-none');
     } else {
-        noResults.classList.remove('d-none');
+        noResults.classList.add('d-none');
     }
 }
 
 function showAllPokemonCards(allCards, noResults) {
     allCards.forEach((card) => {
-            card.style.display = '';
+            card.style.display = '';        // Pokemonkarten anzeigen
         });
         noResults.classList.add('d-none');   // text verstecken
 }
