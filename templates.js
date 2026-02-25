@@ -5,9 +5,9 @@ function getDialogHeaderHTML(pokemon, gifUrl, primaryType) {
             <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
         </div>
         <div class="pokemon-img ${primaryType}">
-            <button class="arrow-buttons" onclick="event.stopPropagation(), previousPokemon()">⬅️</button>
+            
             <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}">
-            <button class="arrow-buttons" onclick="event.stopPropagation(), nextPokemon()">➡️</button>
+            
         </div>
     `;
 }
@@ -25,9 +25,11 @@ function getTypesHTML(types) {
 
 function getTabNavigationHTML() {
     return `<div class="tab-navigation">
+            <button class="arrow-buttons" onclick="event.stopPropagation(), previousPokemon()">⬅️</button>
             <button class="tab-btn active" onclick="showTab('main', event)">Main</button>
             <button class="tab-btn" onclick="showTab('stats', event)">Stats</button>
             <button class="tab-btn" onclick="showTab('evolution', event)">Evolution</button>
+            <button class="arrow-buttons" onclick="event.stopPropagation(), nextPokemon()">➡️</button>
         </div>`;
 }
 
@@ -62,6 +64,7 @@ function getStatsTabHTML(pokemon) {
                 </div>
             </div>`;
 }
+
 function getEvolutionTabHTML() {
     return `<div id="evolution-tab" class="tab-content">
                 <p>Evolutionchain loading...</p>

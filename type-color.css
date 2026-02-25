@@ -21,3 +21,51 @@ background-color: rgb(67,152,55);
 .normal {
     background-color: rgb(130,130,130);
 }
+
+.dark {
+    background-color: rgb(79,71,71);
+}
+
+.dragon {
+    background-color: rgb(87,111,188);    
+}
+
+.electric {
+    background-color: rgb(223,188,40);
+}
+
+.fairy {
+    background-color: rgb(225,140,225);
+}
+
+.fighting {
+    background-color: rgb(228,144,33);
+}
+
+.ghost {
+    background-color: rgb(111,69,112);
+}
+
+.ground {
+    background-color: rgb(164,115,60);
+}
+
+.ice {
+    background-color: rgb(71,200,200);
+}
+
+.poison {
+    background-color: rgb(147,84,203);
+}
+
+.psychic {
+    background-color: rgb(233,108,140);
+}
+
+.rock {
+    background-color: rgb(169,164,129);
+}
+
+.steel {
+    background-color: rgb(116,176,203);
+}

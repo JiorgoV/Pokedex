@@ -33,7 +33,7 @@ async function fetchPokemonDetails(pokemonList) {
         let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/") so bleibt nur z.b. "pokemon/17"
         let details = await loadData(shortUrl);     // Details laden
         pokemonDetails.push(details);           // Details hinzufügen
-        allPokemonData.push(details);           // forEach entfernt weil
+        allPokemonData.push(details);           // forEach entfernt weil sonst alle pokemon nochmal gepusht werden.
     }
     return pokemonDetails;
 }
@@ -41,9 +41,9 @@ async function fetchPokemonDetails(pokemonList) {
 function updateLoadingSpinner() {
     currentOffset += LIMIT;
     loadingCount++;
-    if (loadingCount >= 2) {
-        disableLoadMoreButton();
-    }
+    // if (loadingCount >= 2) {
+    //     disableLoadMoreButton();
+    // }
 }
 
 function renderPokemon(pokemonList) {
@@ -155,6 +155,14 @@ function enableLoadMoreButton() {
     button.disabled = false;
 }
 
+function hideLoadMoreButton() {
+    document.getElementById('load-more-buton').classList.add('d-none');
+}
+
+function showLoadMoreButton() {
+    document.getElementById('load-more-buton').classList.remove('d-none');
+}
+
 async function getEvolutionChain(pokemon) {         // komplettes objekt currentPokemon
     let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');     // Species Url holen und kürzen -> nach replace: "pokemon-species/1/"
     let speciesData = await loadData(speciesUrl);       // Species-Daten laden -> da ist evolution-chain drin
@@ -166,7 +174,6 @@ async function getEvolutionChain(pokemon) {         // komplettes objekt current
     
     return evolutionData.chain;     // nur Chain zurückgeben
 }
-
 
 async function loadEvolutionForCurrentPokemon() {
     let evolutionTab = document.getElementById('evolution-tab');
@@ -201,19 +208,19 @@ function previousPokemon() {
     getDialogContentTemplates(currentPokemon);
 }
 
-
 function searchPokemon() {
     let input = document.querySelector('.search-bar');
     let filter = input.value.toLowerCase();
     let allCards = document.querySelectorAll('.pokemon-card');
     let noResults = document.getElementById('no-results');
-    if (filter.length < 3) {            // wenn weniger als 3 buchstaben --> alle Karten anzeigen
-            showAllPokemonCards(allCards, noResults)
-        return;}
-    
+    if (filter.length < 3) {  
+        showAllPokemonCards(allCards, noResults);          // wenn weniger als 3 buchstaben --> alle Karten anzeigen
+        showLoadMoreButton();
+        return;}   
+        hideLoadMoreButton();
         let foundPokemon = filterPokemonCards(allCards, filter);
         toggleNoResultsText(noResults, foundPokemon);
-
+        
 }
 
 function getPokemonSpritesByName(name) {
@@ -229,8 +236,9 @@ function filterPokemonCards(allCards, filter) {
         if (pokemonName.indexOf(filter) > -1) {         // Prüfe ob suchbergriff(filter) im Namen vorkommt. IndexOf() gibt Position zurück oder -1(nicht gefunden)!
             card.style.display = ''; 
             foundPokemon++; 
+
         } else {
-            card.style.display = 'none';        // wenn nichts gefunden --> verstecke die Karten
+            card.style.display = 'none';        // wenn nichts gefunden --> verstecke die Karten  
         }});
 
     return foundPokemon;

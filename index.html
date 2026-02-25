@@ -24,24 +24,29 @@
 
 <body onload="onloadFunc()">
     <header>
-        <a href="index.html"><img class="pokeball" src="./assets/img/pokeball1.png" alt=""></a>
-        <a class="headline" href="index.html"><h1 class="headline">Pokedex</h1></a>
-        <input class="search-bar" type="text" placeholder="Find Pokemon..." onkeyup="searchPokemon()">
+        <div class="header-content">
+            <a href="index.html"><img class="pokeball" src="./assets/img/pokeball1.png" alt=""></a>
+            <a class="headline" href="index.html">
+                <h1 class="headline">Pokedex</h1>
+            </a>
+            <input class="search-bar" type="text" placeholder="Find Pokemon..." onkeyup="searchPokemon()">
+        </div>
     </header>
 
     <section class="main-content" id="main-content">
-
+        <div class="loading-section">
+            <div class="loader d-none" id="loading-spinner"></div>
+            
+        </div>
+        <p id="no-results" class="no-results d-none">No Pokemons Found</p>
 
     </section>
-    <p id="no-results" class="no-results d-none">No Pokemons Found</p>
-    <div class="loading-section">
-        <div class="loader d-none" id="loading-spinner"></div>
-        <div class="loading-more" id="load-more-buton"><button class="load-button" onclick="loadPkmns()">LOAD MORE</button></div>
-    </div>
+
+    <div class="loading-more" id="load-more-buton"><button class="load-button" onclick="loadPkmns()">LOAD MORE</button></div>
     <dialog class="dialog" id="dialog" onclick="closeDialog()">
         <div class="dialog-content" id="dialogContent" onclick="event.stopPropagation()"></div>
         <div class="button-section">
-            <button class="close-button" onclick="closeDialog()">CLOSE</button>
+            <button class="close-button" onclick="closeDialog()">❌</button>
         </div>
     </dialog>
 
