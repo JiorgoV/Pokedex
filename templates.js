@@ -5,9 +5,7 @@ function getDialogHeaderHTML(pokemon, gifUrl, primaryType) {
             <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
         </div>
         <div class="pokemon-img ${primaryType}">
-            <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}">
-            
-        </div></div>
+            <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}"></div></div>
     `;
 }
 
