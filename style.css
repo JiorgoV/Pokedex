@@ -53,19 +53,37 @@ body.no-scroll {
   z-index: 1;
   left: 50%;
   transform: translate(-50%, 0);
-  top: 148px;
-  height: 680px;
+  top: 168px;
+  /* height: 680px; */
   overflow-y: auto;
   width: 90%;
   max-width: 560px;
-  /* background-color: rgb(8, 33, 41); */
-  background-image: url(./assets/img/pokemonball.jpg);
+  background: none;
   border-style: solid;
   border-color: #08449e;
   border-width: 8px;
-  border-radius: 5px;
+  border-radius: 32px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 0;
+}
 
+.dialog-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-top {
+  border-radius: 20px 20px 0 0;
+  padding-bottom: 8px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dialog-bottom {
+  background-color: white;
+  border-radius: 0 0 20px 20px;
+  flex: 1;
 }
 
 .blur {
@@ -272,6 +290,7 @@ button {
 
 .stats-row {
   gap: 4px;
+  display: flex;
 }
 
 .stat-names {
@@ -348,12 +367,36 @@ button {
   background: none;
   position: absolute;
   top: 8px;
-  left: 480px;
+  right: 16px;
+  font-size: 40px;
+  font-weight: 400;
+  font-family: "Cherry Bomb One", system-ui;
+  cursor: pointer;
 }
+
+
 
 @media(min-width: 320px) and (max-width: 768px) {
   .dialog {
-    height: 400px;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    max-width: none;
+  }
+
+  .dialog-top {
+    border-radius: 0;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+
+  .dialog-bottom {
+    border-radius: 0;
   }
 
   .pokeball {
@@ -369,7 +412,7 @@ button {
 
   } */
 
-  header {
+  .header-content {
     flex-direction: column;
     padding-bottom: 16px;
     padding-top: 16px;
@@ -380,11 +423,12 @@ button {
   }
 
   .pokemon-img {
-    height: 96px;
+    height: 112px;
   }
 
   .pkm-img {
-    height: 88px;
+    height: 104px;
+    padding-bottom: 8px;
   }
 
   .pokemon-card {
@@ -392,58 +436,81 @@ button {
   }
 
   .id-name {
-    padding-right: 104px;
+  
   }
 
-
-}
-
-@media(min-width: 320px) and (max-width: 550px) {
-  .evolution-container {
+  .pkm-id-and-img {
+    display: flex;
     flex-direction: column;
-  }
-
-  .arrow {
-    transform: rotate(90deg);
-  }
-}
-
-@media(min-width: 550px) and (max-width: 768px) {
-  .dialog {
-    height: 640px;
+    gap: 68px;
+    height: 270px;
+    
   }
 }
 
-@media(min-width: 768px) and (max-width: 1024px) {
-  .headline {
-    font-size: 48px;
+  @media(min-width: 320px) and (max-width: 550px) {
+    .evolution-container {
+      flex-direction: column;
+    }
+
+    .arrow {
+      transform: rotate(90deg);
+    }
   }
 
-  .search-bar {
-    width: 240px;
+  @media(min-width: 550px) and (max-width: 768px) {
+    .dialog {}
   }
 
-}
+  @media(min-width: 768px) and (max-width: 1024px) {
+    .headline {
+      font-size: 48px;
+    }
 
-@media(min-width: 1024px) and (max-width: 1920px) {}
+    .search-bar {
+      width: 240px;
+    }
 
-.progress-row {
-  color: black;
-  gap: 24px;
-}
+  }
 
-.no-results {
-  text-align: center;
-  font-size: 24px;
-  color: white;
-  padding: 40px;
-}
+  @media(min-width: 1024px) and (max-width: 1920px) {}
 
-.load-button {
-  font-family: "Cherry Bomb One", system-ui;
-  height: 48px;
-  width: 120px;
-  background-color: rgb(245, 82, 82);
-  border-radius: 16px;
-  padding: 8px;
-}
+  .progress-row {
+    color: black;
+    gap: 24px;
+  }
+
+  .no-results {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    padding: 40px;
+  }
+
+  .load-button {
+    font-family: "Cherry Bomb One", system-ui;
+    height: 48px;
+    width: 120px;
+    background-color: rgb(245, 82, 82);
+    border-radius: 16px;
+    padding: 8px;
+  }
+
+  .stat-bars {
+    background-color: #390ae6;
+  }
+
+  .stat-bars-container {
+    flex: 1;
+  }
+
+  .stat-value {
+    background-color: #f1f0f0;
+    opacity: 0.8;
+    color: black;
+    border-radius: 5px;
+    height: 24px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+

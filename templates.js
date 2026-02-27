@@ -1,14 +1,13 @@
 function getDialogHeaderHTML(pokemon, gifUrl, primaryType) {
     return `
-        <div class="id-name">
+        <div class="pkm-id-and-img"><div class="id-name">
             <h3>#${pokemon.id}</h3>
             <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
         </div>
         <div class="pokemon-img ${primaryType}">
-            
             <img class="pkm-img" src="${gifUrl}" alt="${pokemon.name}">
             
-        </div>
+        </div></div>
     `;
 }
 
@@ -47,9 +46,12 @@ function getStatsRowHTML(statName, statValue) {
             <div class="stat-names">
                 <p>${statName}:</p>
             </div>
-            <div class="progress progress-row">
-                <div class="progress-bar" role="progressbar" style="width: ${statValue}%;">${statValue}</div>
+            <div class="stat-value">
+                <p>${statValue}</p>
             </div>
+            <div class="stat-bars-container">
+                <div class="stat-bars" style="width: ${statValue}%;; height: 8px;"></div>
+            </div> 
         </div>`;
 }
 

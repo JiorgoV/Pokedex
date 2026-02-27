@@ -67,7 +67,7 @@ function renderPokemon(pokemonList) {
 
         mainContent.innerHTML += `
             <div class="pokemon-card" onclick="openDialog(${pokemon.id})">  
-            <div class="id-name"> <h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
+            <div class="id-name"><h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
             <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${imageUrl}" alt="${pokemon.name}"></div>
             <div class="pokemon-types">${typesHTML}</div>
             </div>
@@ -109,13 +109,16 @@ function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene P
     let primaryType = pokemon.types[0].type.name
     let typesHTML = getTypesHTML(pokemon.types);
     dialogContent.innerHTML = `
-        ${getDialogHeaderHTML(pokemon, gifUrl, primaryType)}
-        <div class="pokemon-types">${typesHTML}</div>
-        ${getTabNavigationHTML()}
-        ${getMainTabHTML(pokemon)}       
-        ${getStatsTabHTML(pokemon)}    
-        ${getEvolutionTabHTML()}    
-        </div>
+        <div class="dialog-top ${primaryType}">
+            
+            ${getDialogHeaderHTML(pokemon, gifUrl, primaryType)}
+            <div class="pokemon-types">${typesHTML}</div></div>
+        <div class="dialog-bottom">
+            ${getTabNavigationHTML()}
+            ${getMainTabHTML(pokemon)}       
+            ${getStatsTabHTML(pokemon)}    
+            ${getEvolutionTabHTML()}    
+        </div></div>
     `;
 }
 
