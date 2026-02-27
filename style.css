@@ -407,10 +407,6 @@ button {
     background-size: auto;
   }
 
-  /* .search-bar {
-
-  } */
-
   .header-content {
     flex-direction: column;
     padding-bottom: 16px;
@@ -432,10 +428,6 @@ button {
 
   .pokemon-card {
     height: 232px;
-  }
-
-  .id-name {
-  
   }
 
   .pkm-id-and-img {
