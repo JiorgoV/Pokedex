@@ -5,6 +5,7 @@ let loadingCount = 0;
 let allPokemonData = [];        // Alle Pokemon
 let currentPokemon = null;
 let currentPokemonIndex = null;
+let foundPokemonFromSearch = [];
 
 async function onloadFunc() {
 
@@ -75,13 +76,24 @@ function renderPokemon(pokemonList) {
     });
 }
 
+function getArray() {
+    if (foundPokemonFromSearch.length == 0) {
+        return allPokemonData;
+    } else {
+        return foundPokemonFromSearch;
+    }
+}
+
 function openDialog(pokemonId) {
     let pokemon;
     let pokemonIndex;
-    allPokemonData.forEach((pkmn, index) => {
+    let usedArray = getArray();
+    usedArray.forEach((pkmn, index) => {
         if (pkmn.id === pokemonId) {
             pokemon = pkmn;
             pokemonIndex = index;
+            console.log(usedArray);
+            
         }
     });
     currentPokemon = pokemon;       // global speichern um darauf zuzugreifen z.B. Evolution
@@ -189,25 +201,27 @@ async function loadEvolutionForCurrentPokemon() {
     evolutionTab.innerHTML = evolutionHTML;
 }
 
-function nextPokemon() {
-    if (currentPokemonIndex < allPokemonData.length - 1) {
+function nextPokemon() {  
+    let usedArray = getArray();
+    if (currentPokemonIndex < usedArray.length - 1) {
         currentPokemonIndex++;
     } else {
         currentPokemonIndex = 0;
     }
 
-    currentPokemon = allPokemonData[currentPokemonIndex];
+    currentPokemon = usedArray[currentPokemonIndex];
     getDialogContentTemplates(currentPokemon);
 }
 
 function previousPokemon() {
+    let usedArray = getArray();
     if (currentPokemonIndex > 0) {
         currentPokemonIndex--;
     } else {
-        currentPokemonIndex = allPokemonData.length - 1;
+        currentPokemonIndex = usedArray.length - 1;
     }
 
-    currentPokemon = allPokemonData[currentPokemonIndex];
+    currentPokemon = usedArray[currentPokemonIndex];
     getDialogContentTemplates(currentPokemon);
 }
 
@@ -228,18 +242,27 @@ function searchPokemon() {
 
 function getPokemonSpritesByName(name) {
     let pokemon = allPokemonData.find(pkmn => pkmn.name === name);
-
+    if (!pokemon) {
+        return null;
+    }
     return pokemon.sprites.front_default;
 }
 
 function filterPokemonCards(allCards, filter) {
     let foundPokemon = 0;
+    foundPokemonFromSearch = [];
     allCards.forEach((card) => {        // durch jede PokemonKarte gehen
         let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();       // hole den Namen
         if (pokemonName.indexOf(filter) > -1) {         // Prüfe ob suchbergriff(filter) im Namen vorkommt. IndexOf() gibt Position zurück oder -1(nicht gefunden)!
             card.style.display = ''; 
             foundPokemon++; 
-
+            let pokemon = allPokemonData.find(pkmn => pkmn.name === pokemonName);
+            if (pokemon) {
+                foundPokemonFromSearch.push(pokemon);
+                console.log(foundPokemonFromSearch);
+                
+            }
+            
         } else {
             card.style.display = 'none';        // wenn nichts gefunden --> verstecke die Karten  
         }});
@@ -256,6 +279,7 @@ function toggleNoResultsText(noResults, foundPokemon) {
 }
 
 function showAllPokemonCards(allCards, noResults) {
+    foundPokemonFromSearch = [];
     allCards.forEach((card) => {
             card.style.display = '';        // Pokemonkarten anzeigen
         });
