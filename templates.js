@@ -73,14 +73,23 @@ function getEvolutionTabHTML() {
 
 function getEvolutionHTML(chain) {
     if (!chain) return '<p>No Evolutionchain available</p>';
-    let names = [chain.species.name];  // erste Evolution
-    if (chain.evolves_to[0]) {          // schauen ob es zweite Evo gibt
-        names.push(chain.evolves_to[0].species.name);
-    }
-    if (chain.evolves_to[0].evolves_to[0]) {        // dritte Evo 
-        names.push(chain.evolves_to[0].evolves_to[0].species.name);  // jetzt sieht das array so aus. names = ["bulbasaur", "ivysaur", "venusaur"]
-    }
-    return getEvolutionStagesHTML(names);
+    let html = '<div class="evolution-container">';
+    let names = [];
+
+    names.push(chain.species.name);  // Base Pokemon ---> gibt es immer
+
+    if (chain.evolves_to && chain.evolves_to.length > 0) {  // durch alle 2. Evolutionen durchgehen wenn welche da sind
+        for (let i = 0; i < chain.evolves_to.length; i++) {
+            names.push(chain.evolves_to[i].species.name);       // Evolution in names pushen
+            console.log(names);
+            
+            if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // 3. Evolution checken ob vorhanden
+                for (let index = 0; index < chain.evolves_to[i].evolves_to.length; index++) {
+                    names.push(chain.evolves_to[i].evolves_to[index].species.name);     // Evolution in names pushen
+                    console.log(names);
+                    }}}}
+    // namen Anzeigen
+    
 }
 
 function getEvolutionStagesHTML(names) {
@@ -97,3 +106,4 @@ function getEvolutionStagesHTML(names) {
      html += '</div>';
      return html;
 }
+ 
