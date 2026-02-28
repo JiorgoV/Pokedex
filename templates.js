@@ -39,7 +39,7 @@ function getMainTabHTML(pokemon) {
             </div>`;
 }
 
-function getStatsRowHTML(statName, statValue) {
+function getStatsRowHTML(statName, statValue, percentage) {
     return `<div class="stats-row">
             <div class="stat-names">
                 <p>${statName}:</p>
@@ -48,7 +48,7 @@ function getStatsRowHTML(statName, statValue) {
                 <p>${statValue}</p>
             </div>
             <div class="stat-bars-container">
-                <div class="stat-bars" style="width: ${statValue}%;; height: 8px;"></div>
+                <div class="stat-bars" style="width: ${percentage}%; height: 8px;"></div>
             </div> 
         </div>`;
 }
@@ -57,7 +57,11 @@ function getStatsTabHTML(pokemon) {
     const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
     let statsHTML = '';
     pokemon.stats.forEach((stat, index) => {
-        statsHTML += getStatsRowHTML(statNames[index], stat.base_stat);});
+        let percentage = stat.base_stat;
+        if (percentage > 100) {
+            percentage = 100;
+        }
+        statsHTML += getStatsRowHTML(statNames[index], stat.base_stat, percentage);});
     return `<div id="stats-tab" class="tab-content">
                 <div class="tab-stats">
                     ${statsHTML}
