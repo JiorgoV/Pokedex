@@ -89,21 +89,36 @@ function getEvolutionHTML(chain) {
                     console.log(names);
                     }}}}
     // namen Anzeigen
-    
+    names.forEach((name, index) => {
+        if (index > 0) {
+            html += '<span class="arrow">→</span>';
+        }
+        html += getEvolutionStagesHTML(name)
+    });
+
+    if (names.length === 1) {
+        html += '<p class="no-evolution">This Pokemon doesn`t evolve</p>';
+    }
+
+    html += '</div>';
+    return html;
 }
 
-function getEvolutionStagesHTML(names) {
-    let html = '<div class="evolution-container">';
-     names.forEach((name, i) => {
-        if (i > 0) html += '<span class="arrow">→</span>';
-        let sprite = getPokemonSpritesByName(name);
-        let imgHTML = `<img src="${sprite}" alt="${name}">`;
-        html += `
-            <div class="evolution-stage">
-                ${imgHTML}
-                <div class="evolution-names"><p>${name.charAt(0).toUpperCase() + name.slice(1)}</p></div>
-            </div>`;});
-     html += '</div>';
-     return html;
+function getEvolutionStagesHTML(name) {
+    let sprite = getPokemonSpritesByName(name);
+    let imgHTML;
+    
+    if (sprite) {
+        imgHTML = `<img src="${sprite}" alt="${name}">`;
+    } else {
+        imgHTML = '<div class="no-image">No Image</div>';
+    }
+    
+    return `
+        <div class="evolution-stage">
+            ${imgHTML}
+            <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
+        </div>
+    `;
 }
  
