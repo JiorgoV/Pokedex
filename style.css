@@ -197,15 +197,17 @@ button {
 }
 
 .loading-section {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: auto;
   width: 100%;
-  /* max-width: 1920px; */
-  /* background-image: linear-gradient(to bottom, red, white); */
-  /* padding: 24px 0 32px 0; */
   gap: 16px;
 }
 

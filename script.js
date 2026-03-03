@@ -92,9 +92,11 @@ function openDialog(pokemonId) {
             pokemon = pkmn;
             pokemonIndex = index;
             // console.log(usedArray);
+        }});
+    showPokemonDialog(pokemon, pokemonIndex);
+}
 
-        }
-    });
+function showPokemonDialog(pokemon, pokemonIndex) {  
     currentPokemon = pokemon;       // global speichern um darauf zuzugreifen z.B. Evolution
     currentPokemonIndex = pokemonIndex;     // Index global speichern, so kann ich vor-zurück navigieren
     let dialog = document.getElementById('dialog');
