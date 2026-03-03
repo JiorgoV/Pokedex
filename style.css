@@ -470,9 +470,6 @@ button {
     flex-direction: column;
   }
 
-  .arrow {
-    /* transform: rotate(90deg); */
-  }
 }
 
 @media(min-width: 768px) and (max-width: 1024px) {
@@ -550,7 +547,3 @@ button {
 .dialog-img {
   height: 88px;
 }
-
-/* ::-webkit-scrollbar-thumb:hover {
-  background: red; 
-} */
