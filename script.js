@@ -13,7 +13,7 @@ async function onloadFunc() {
 
 async function loadData(path = "") {
     let response = await fetch(BASE_URL + path);         // BASE_URL + path = "https://pokeapi.co/api/v2/" + "pokemon/25"
-    let responseToJson = await response.json();    
+    let responseToJson = await response.json();
     return responseToJson;
 }
 
@@ -28,8 +28,6 @@ async function loadPkmns() {
 
 async function fetchPokemonDetails(pokemonList) {
     let pokemonDetails = [];
-    // console.log(pokemonDetails);
-    
     for (let i = 0; i < pokemonList.length; i++) {
         let pokemon = pokemonList[i];
         let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/") so bleibt nur z.b. "pokemon/17"
@@ -37,9 +35,7 @@ async function fetchPokemonDetails(pokemonList) {
         pokemonDetails.push(details);           // Details hinzufügen
         allPokemonData.push(details);           // forEach entfernt weil sonst alle pokemon nochmal gepusht werden.
     }
-    
     return pokemonDetails;
-    
 }
 
 function updateLoadingSpinner() {
@@ -56,22 +52,9 @@ function renderPokemon(pokemonList) {
             gifUrl = pokemon.sprites.front_default;
         }
         let primaryType = pokemon.types[0].type.name;       // hole den ersten Typ des Pokemon(fire, water usw) Array -> pokemon.types[0]
+        let cardHTML = getPokemonCardHTML(pokemon, imageUrl, primaryType);  // ✅ Ausgelagert!
 
-        let typesHTML = '';
-        pokemon.types.forEach((type) => {       // durch jedej Typen gehen falls 2 vorhanden sind
-            typesHTML += `<img src="assets/icons/${type.type.name}.svg"
-                    alt="${type.type.name}"
-                    class="type-icon"
-                    title="${type.type.name}"></img>`;
-        });
-
-        mainContent.innerHTML += `
-            <div class="pokemon-card" onclick="openDialog(${pokemon.id})">  
-            <div class="id-name"><h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
-            <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${imageUrl}" alt="${pokemon.name}"></div>
-            <div class="pokemon-types">${typesHTML}</div>
-            </div>
-        `;
+        mainContent.innerHTML += cardHTML;
     });
 }
 
@@ -92,11 +75,12 @@ function openDialog(pokemonId) {
             pokemon = pkmn;
             pokemonIndex = index;
             // console.log(usedArray);
-        }});
+        }
+    });
     showPokemonDialog(pokemon, pokemonIndex);
 }
 
-function showPokemonDialog(pokemon, pokemonIndex) {  
+function showPokemonDialog(pokemon, pokemonIndex) {
     currentPokemon = pokemon;       // global speichern um darauf zuzugreifen z.B. Evolution
     currentPokemonIndex = pokemonIndex;     // Index global speichern, so kann ich vor-zurück navigieren
     let dialog = document.getElementById('dialog');
@@ -122,8 +106,7 @@ function getDialogContentTemplates(pokemon) {       // pokemon = das gefundene P
     let primaryType = pokemon.types[0].type.name
     let typesHTML = getTypesHTML(pokemon.types);
     dialogContent.innerHTML = `
-        <div class="dialog-top ${primaryType}">
-            
+        <div class="dialog-top ${primaryType}"> 
             ${getDialogHeaderHTML(pokemon, gifUrl, primaryType)}
             <div class="pokemon-types">${typesHTML}</div></div>
         <div class="dialog-bottom">
