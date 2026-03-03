@@ -53,7 +53,7 @@ body.no-scroll {
   z-index: 1;
   left: 50%;
   transform: translate(-50%, 0);
-  top: 168px;
+  top: 16px;
   /* height: 680px; */
   overflow-y: auto;
   width: 90%;
@@ -313,12 +313,35 @@ button {
   padding-left: 8px;
 }
 
+.evolution-wrapper {
+  display: flex;
+  justify-content: center;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 .evolution-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 20px;
+}
+
+.second-evolution-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.third-evolution-container {
+  display: flex;
+  align-items: center;
+}
+
+.second-evolution-items {
+  display: flex;
+  align-items: center;
+}
+
+.no-evolution {
+  color: black;
 }
 
 .evolution-stage {
@@ -368,7 +391,8 @@ button {
   position: absolute;
   top: 8px;
   right: 16px;
-  color: #312d2de6;;
+  color: #312d2de6;
+  ;
   font-size: 40px;
   font-weight: 400;
   font-family: "Cherry Bomb One", system-ui;
@@ -435,68 +459,92 @@ button {
     flex-direction: column;
     gap: 68px;
     height: 270px;
-    
+
   }
 }
 
-  @media(min-width: 320px) and (max-width: 550px) {
-    .evolution-container {
-      flex-direction: column;
-    }
-
-    .arrow {
-      transform: rotate(90deg);
-    }
+@media(min-width: 320px) and (max-width: 550px) {
+  .evolution-container {
+    flex-direction: column;
   }
 
-  @media(min-width: 768px) and (max-width: 1024px) {
-    .headline {
-      font-size: 48px;
-    }
+  .arrow {
+    transform: rotate(90deg);
+  }
+}
 
-    .search-bar {
-      width: 240px;
-    }
-
+@media(min-width: 768px) and (max-width: 1024px) {
+  .headline {
+    font-size: 48px;
   }
 
-  .progress-row {
-    color: black;
-    gap: 24px;
+  .search-bar {
+    width: 240px;
   }
 
-  .no-results {
-    text-align: center;
-    font-size: 24px;
-    color: white;
-    padding: 40px;
-  }
+}
 
-  .load-button {
-    font-family: "Cherry Bomb One", system-ui;
-    height: 48px;
-    width: 120px;
-    background-color: rgb(245, 82, 82);
-    border-radius: 16px;
-    padding: 8px;
-  }
+.progress-row {
+  color: black;
+  gap: 24px;
+}
 
-  .stat-bars {
-    background-color: #390ae6;
-  }
+.no-results {
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  padding: 40px;
+}
 
-  .stat-bars-container {
-    flex: 1;
-  }
+.load-button {
+  font-family: "Cherry Bomb One", system-ui;
+  height: 48px;
+  width: 120px;
+  background-color: rgb(245, 82, 82);
+  border-radius: 16px;
+  padding: 8px;
+}
 
-  .stat-value {
-    background-color: #f1f0f0;
-    opacity: 0.8;
-    color: black;
-    border-radius: 5px;
-    height: 24px;
-    width: 44px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+.stat-bars {
+  background-color: #390ae6;
+}
 
+.stat-bars-container {
+  flex: 1;
+}
+
+.stat-value {
+  background-color: #f1f0f0;
+  opacity: 0.8;
+  color: black;
+  border-radius: 5px;
+  height: 24px;
+  width: 44px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.no-image {
+  color: black;
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 90%;
+
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fdc51c;
+  border-radius: 10px;
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+  background: red; 
+} */

@@ -31,7 +31,7 @@ function getTabNavigationHTML() {
 }
 
 function getMainTabHTML(pokemon) {
-    return `<div id="tab-content">
+    return `
             <div id="main-tab" class="tab-content active">
                 <p>Height: ${pokemon.height / 10}m</p>
                 <p>Weight: ${pokemon.weight / 10}kg</p>
@@ -77,45 +77,26 @@ function getEvolutionTabHTML() {
 
 function getEvolutionHTML(chain) {
     if (!chain) return '<p>No Evolutionchain available</p>';
-    let html = '<div class="evolution-container">';
-    let names = [];
-
-    names.push(chain.species.name);  // Base Pokemon ---> gibt es immer
-
-    if (chain.evolves_to && chain.evolves_to.length > 0) {  // durch alle 2. Evolutionen durchgehen wenn welche da sind
-        for (let i = 0; i < chain.evolves_to.length; i++) {
-            names.push(chain.evolves_to[i].species.name);       // Evolution in names pushen
-            console.log(names);
-            
-            if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // 3. Evolution checken ob vorhanden
-                for (let index = 0; index < chain.evolves_to[i].evolves_to.length; index++) {
-                    names.push(chain.evolves_to[i].evolves_to[index].species.name);     // Evolution in names pushen
-                    console.log(names);
-                    }}}}
-    // namen Anzeigen
-    names.forEach((name, index) => {
-        if (index > 0) {
-            html += '<span class="arrow">→</span>';
-        }
-        html += getEvolutionStagesHTML(name)
-    });
-
-    if (names.length === 1) {
-        html += '<p class="no-evolution">This Pokemon doesn`t evolve</p>';
-    }
-
+    let html = '<div class="evolution-wrapper">';
+    let evolutionData = getEvolutionNames(chain);  // ✅ Ausgelagert!
+    
+    html += getBaseEvolution(evolutionData.names);
+    html += getSecondEvolution(evolutionData.secondNames);
+    html += getThirdEvolution(evolutionData.thirdNames);
+    
     html += '</div>';
     return html;
 }
 
+
 function getEvolutionStagesHTML(name) {
     let sprite = getPokemonSpritesByName(name);
-    let imgHTML;
+    let imgHTML = '';
     
     if (sprite) {
         imgHTML = `<img src="${sprite}" alt="${name}">`;
     } else {
-        imgHTML = '<div class="no-image">No Image</div>';
+        imgHTML = '<div class="no-image">🚫</br>No Image</div>';
     }
     
     return `
@@ -124,5 +105,65 @@ function getEvolutionStagesHTML(name) {
             <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
         </div>
     `;
+}
+
+function getEvolutionNames(chain) {
+    let names = [chain.species.name];       // Base Pokemon ---> gibt es immer
+    let secondNames = [];
+    let thirdNames = []; 
+
+    if (chain.evolves_to && chain.evolves_to.length > 0) {  // durch alle 2. Evolutionen durchgehen wenn welche da sind
+        for (let i = 0; i < chain.evolves_to.length; i++) {
+            secondNames.push(chain.evolves_to[i].species.name);       // Evolution in secondNames pushen
+            
+            if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // 3. Evolution checken ob vorhanden
+                for (let index = 0; index < chain.evolves_to[i].evolves_to.length; index++) {
+                    thirdNames.push(chain.evolves_to[i].evolves_to[index].species.name);     // Evolution in thirdNames pushen
+    }}}}
+     return { names, secondNames, thirdNames };
+}
+
+function getBaseEvolution(names) {
+     // erste evolution namen Anzeigen
+    let html = '';
+    html += '<div class="evolution-container">';
+    names.forEach((name, index) => {
+        if (index > 0) {
+            html += '<span class="arrow">→</span>';
+        }
+        html += getEvolutionStagesHTML(name);
+    });
+    html += '</div>';
+    return html;
+}
+
+function getSecondEvolution(secondNames) {
+    // zweite evolution namen Anzeigen
+    if (secondNames.length === 0) {
+        return '<p class="no-evolution">This Pokemon doesn`t evolve</p>';
+    } 
+    let html = '<div class="second-evolution-container">';  
+    secondNames.forEach((name) => {
+        html += '<div class="second-evolution-items">';
+        html += '<span class="arrow">→</span>';
+        html += getEvolutionStagesHTML(name);
+        html += '</div>';
+    }); 
+    html += '</div>';
+    return html;
+}
+
+function getThirdEvolution(thirdNames) {
+    // dritte evolution namen Anzeigen
+    if (thirdNames.length === 0) {
+        return '';
+    }  
+    let html = '<div class="third-evolution-container">';    
+    thirdNames.forEach((name) => {
+        html += '<span class="arrow">→</span>';
+        html += getEvolutionStagesHTML(name);
+    }); 
+    html += '</div>';
+    return html;
 }
  

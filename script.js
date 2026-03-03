@@ -1,7 +1,6 @@
 const BASE_URL = "https://pokeapi.co/api/v2/";  // Basis-URL für alle API-Aufrufe
-let currentOffset = 0;  
+let currentOffset = 0;
 const LIMIT = 30;
-let loadingCount = 0;
 let allPokemonData = [];        // Alle Pokemon
 let currentPokemon = null;
 let currentPokemonIndex = null;
@@ -13,8 +12,8 @@ async function onloadFunc() {
 }
 
 async function loadData(path = "") {
-    let response = await fetch(BASE_URL + path);
-    let responseToJson = await response.json();     // BASE_URL + path = "https://pokeapi.co/api/v2/" + "pokemon/25"
+    let response = await fetch(BASE_URL + path);         // BASE_URL + path = "https://pokeapi.co/api/v2/" + "pokemon/25"
+    let responseToJson = await response.json();    
     return responseToJson;
 }
 
@@ -28,7 +27,9 @@ async function loadPkmns() {
 }
 
 async function fetchPokemonDetails(pokemonList) {
-    let pokemonDetails = [];        
+    let pokemonDetails = [];
+    // console.log(pokemonDetails);
+    
     for (let i = 0; i < pokemonList.length; i++) {
         let pokemon = pokemonList[i];
         let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Kürze die URL (entferne "https://pokeapi.co/api/v2/") so bleibt nur z.b. "pokemon/17"
@@ -36,15 +37,13 @@ async function fetchPokemonDetails(pokemonList) {
         pokemonDetails.push(details);           // Details hinzufügen
         allPokemonData.push(details);           // forEach entfernt weil sonst alle pokemon nochmal gepusht werden.
     }
+    
     return pokemonDetails;
+    
 }
 
 function updateLoadingSpinner() {
     currentOffset += LIMIT;
-    loadingCount++;
-    // if (loadingCount >= 2) {
-    //     disableLoadMoreButton();
-    // }
 }
 
 function renderPokemon(pokemonList) {
@@ -52,7 +51,7 @@ function renderPokemon(pokemonList) {
     pokemonList.forEach((pokemon) => {
         let imageUrl = pokemon.sprites.front_default;
         let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
-        
+
         if (!gifUrl) {
             gifUrl = pokemon.sprites.front_default;
         }
@@ -92,8 +91,8 @@ function openDialog(pokemonId) {
         if (pkmn.id === pokemonId) {
             pokemon = pkmn;
             pokemonIndex = index;
-            console.log(usedArray);
-            
+            // console.log(usedArray);
+
         }
     });
     currentPokemon = pokemon;       // global speichern um darauf zuzugreifen z.B. Evolution
@@ -181,12 +180,12 @@ function showLoadMoreButton() {
 async function getEvolutionChain(pokemon) {         // komplettes objekt currentPokemon
     let speciesUrl = pokemon.species.url.replace('https://pokeapi.co/api/v2/', '');     // Species Url holen und kürzen -> nach replace: "pokemon-species/1/"
     let speciesData = await loadData(speciesUrl);       // Species-Daten laden -> da ist evolution-chain drin
-    console.log(speciesData);
-    
+    // console.log(speciesData);
+
     let evolutionUrl = speciesData.evolution_chain.url.replace('https://pokeapi.co/api/v2/', '');   // Evolution-Chain holen und kürzen -> nach replace: "evolution-chain/1/"
     let evolutionData = await loadData(evolutionUrl);       // Evolution-cahin daten laden
-    console.log(evolutionData);
-    
+    // console.log(evolutionData);
+
     return evolutionData.chain;     // nur Chain zurückgeben
 }
 
@@ -201,7 +200,7 @@ async function loadEvolutionForCurrentPokemon() {
     evolutionTab.innerHTML = evolutionHTML;
 }
 
-function nextPokemon() {  
+function nextPokemon() {
     let usedArray = getArray();
     if (currentPokemonIndex < usedArray.length - 1) {
         currentPokemonIndex++;
@@ -230,22 +229,23 @@ function searchPokemon() {
     let filter = input.value.toLowerCase();
     let allCards = document.querySelectorAll('.pokemon-card');
     let noResults = document.getElementById('no-results');
-    if (filter.length < 3) {  
+    if (filter.length < 3) {
         showAllPokemonCards(allCards, noResults);          // wenn weniger als 3 buchstaben --> alle Karten anzeigen
         showLoadMoreButton();
-        return;}   
-        hideLoadMoreButton();
-        let foundPokemon = filterPokemonCards(allCards, filter);
-        toggleNoResultsText(noResults, foundPokemon);
-        
+        return;
+    }
+    hideLoadMoreButton();
+    let foundPokemon = filterPokemonCards(allCards, filter);
+    toggleNoResultsText(noResults, foundPokemon);
+
 }
 
 function getPokemonSpritesByName(name) {
     let pokemon = allPokemonData.find(pkmn => pkmn.name === name);
     if (!pokemon) {
         return null;
-    }
-    return pokemon.sprites.front_default;
+    } else
+        return pokemon.sprites.front_default;
 }
 
 function filterPokemonCards(allCards, filter) {
@@ -254,18 +254,19 @@ function filterPokemonCards(allCards, filter) {
     allCards.forEach((card) => {        // durch jede PokemonKarte gehen
         let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();       // hole den Namen
         if (pokemonName.indexOf(filter) > -1) {         // Prüfe ob suchbergriff(filter) im Namen vorkommt. IndexOf() gibt Position zurück oder -1(nicht gefunden)!
-            card.style.display = ''; 
-            foundPokemon++; 
+            card.style.display = '';
+            foundPokemon++;
             let pokemon = allPokemonData.find(pkmn => pkmn.name === pokemonName);
             if (pokemon) {
                 foundPokemonFromSearch.push(pokemon);
                 console.log(foundPokemonFromSearch);
-                
+
             }
-            
+
         } else {
             card.style.display = 'none';        // wenn nichts gefunden --> verstecke die Karten  
-        }});
+        }
+    });
 
     return foundPokemon;
 }
@@ -281,7 +282,7 @@ function toggleNoResultsText(noResults, foundPokemon) {
 function showAllPokemonCards(allCards, noResults) {
     foundPokemonFromSearch = [];
     allCards.forEach((card) => {
-            card.style.display = '';        // Pokemonkarten anzeigen
-        });
-        noResults.classList.add('d-none');   // text verstecken
+        card.style.display = '';        // Pokemonkarten anzeigen
+    });
+    noResults.classList.add('d-none');   // text verstecken
 }
