@@ -78,7 +78,7 @@ function getEvolutionTabHTML() {
 function getEvolutionHTML(chain) {
     if (!chain) return '<p>No Evolutionchain available</p>';
     let html = '<div class="evolution-wrapper">';
-    let evolutionData = getEvolutionNames(chain);  // ✅ Ausgelagert!
+    let evolutionData = getEvolutionNames(chain); 
     
     html += getBaseEvolution(evolutionData.names);
     html += getSecondEvolution(evolutionData.secondNames);
@@ -93,7 +93,7 @@ function getEvolutionStagesHTML(name) {
     let imgHTML = '';
     
     if (sprite) {
-        imgHTML = `<img src="${sprite}" alt="${name}">`;
+        imgHTML = `<img class="dialog-img" src="${sprite}" alt="${name}">`;
     } else {
         imgHTML = '<div class="no-image">🚫</br>No Image</div>';
     }

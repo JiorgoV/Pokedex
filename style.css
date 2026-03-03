@@ -471,7 +471,7 @@ button {
   }
 
   .arrow {
-    transform: rotate(90deg);
+    /* transform: rotate(90deg); */
   }
 }
 
@@ -545,6 +545,10 @@ button {
 ::-webkit-scrollbar-thumb {
   background: #fdc51c;
   border-radius: 10px;
+}
+
+.dialog-img {
+  height: 88px;
 }
 
 /* ::-webkit-scrollbar-thumb:hover {
