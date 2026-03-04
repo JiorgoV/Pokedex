@@ -144,21 +144,17 @@ function getThirdEvolution(thirdNames) {
     return html;
 }
 
-function getPokemonCardHTML(pokemon, imageUrl, primaryType) {
-    let typesHTML = '';
-    pokemon.types.forEach((type) => {       // durch jedej Typen gehen falls 2 vorhanden sind
-        typesHTML += `<img src="assets/icons/${type.type.name}.svg"
-                    alt="${type.type.name}"
-                    class="type-icon"
-                    title="${type.type.name}"></img>`;
-    });
-
+function getPokemonCardHTML(pokemon, imageUrl, primaryType, typesHTML) {
     return `
-            <div class="pokemon-card" onclick="openDialog(${pokemon.id})">  
-            <div class="id-name"><h3>#${pokemon.id} <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3></div>
-            <div class="pokemon-img ${primaryType}"><img class="pkm-img" src="${imageUrl}" alt="${pokemon.name}"></div>
-            <div class="pokemon-types">${typesHTML}</div>
+        <div class="pokemon-card" onclick="openDialog(${pokemon.id})">  
+            <div class="id-name">
+                <h3>#${pokemon.id}</h3>
+                <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
             </div>
-        `;
+            <div class="pokemon-img ${primaryType}">
+                <img class="pkm-img" src="${imageUrl}" alt="${pokemon.name}">
+            </div>
+            <div class="pokemon-types">${typesHTML}</div>
+        </div>
+    `;
 }
-

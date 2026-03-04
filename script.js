@@ -44,17 +44,10 @@ function updateLoadingSpinner() {
 
 function renderPokemon(pokemonList) {
     let mainContent = document.getElementById('main-content');
-    pokemonList.forEach((pokemon) => {
-        let imageUrl = pokemon.sprites.front_default;
-        let gifUrl = pokemon.sprites.versions['generation-v']['black-white'].animated.front_default;
-
-        if (!gifUrl) {
-            gifUrl = pokemon.sprites.front_default;
-        }
-        let primaryType = pokemon.types[0].type.name;       // get the first pokemon type(fire, water etc) Array -> pokemon.types[0]
-        let cardHTML = getPokemonCardHTML(pokemon, imageUrl, primaryType);
-
-        mainContent.innerHTML += cardHTML;
+    
+    pokemonList.forEach((pokemon) => {      // go through every pokemon in array(pokemonList)
+        let cardHTML = getPokemonCard(pokemon);  // get the finished HTML for the pokeon card (logic in  getPokemonCard())
+        mainContent.innerHTML += cardHTML;      // add cardHTML to mainContent
     });
 }
 
@@ -288,3 +281,10 @@ function getStatsHTML(pokemon) {
     return statsHTML;
 }
 
+function getPokemonCard(pokemon) {
+    let imageUrl = pokemon.sprites.front_default;
+    let primaryType = pokemon.types[0].type.name;
+    let typesHTML = getTypesHTML(pokemon.types);  // get Types HTML before
+    
+    return getPokemonCardHTML(pokemon, imageUrl, primaryType, typesHTML); 
+}
