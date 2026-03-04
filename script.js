@@ -1,6 +1,6 @@
 const BASE_URL = "https://pokeapi.co/api/v2/";  // Basic-URL for all API-Calls
 let currentOffset = 0;
-const LIMIT = 30;
+const LIMIT = 133;
 let allPokemonData = [];        // all Pokemon
 let currentPokemon = null;
 let currentPokemonIndex = null;
@@ -169,11 +169,9 @@ function getEvolutionNames(chain) {
     let names = [chain.species.name];       // Base Pokemon ---> gibt es immer
     let secondNames = [];
     let thirdNames = [];
-
     if (chain.evolves_to && chain.evolves_to.length > 0) {  // durch alle 2. Evolutionen durchgehen wenn welche da sind
         for (let i = 0; i < chain.evolves_to.length; i++) {
             secondNames.push(chain.evolves_to[i].species.name);       // Evolution in secondNames pushen
-
             if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // 3. Evolution checken ob vorhanden
                 for (let index = 0; index < chain.evolves_to[i].evolves_to.length; index++) {
                     thirdNames.push(chain.evolves_to[i].evolves_to[index].species.name);     // Evolution in thirdNames pushen
@@ -187,7 +185,6 @@ function getEvolutionNames(chain) {
 function getEvolutionStagesHTML(name) {
     let sprite = getPokemonSpritesByName(name);
     let imgHTML = '';
-
     if (sprite) {
         imgHTML = `<img class="dialog-img" src="${sprite}" alt="${name}">`;
     } else {
@@ -282,7 +279,6 @@ function searchPokemon() {
     toggleLoadmoreButton(false);
     let foundPokemon = filterPokemonCards(allCards, filter);
     toggleNoResultsText(noResults, foundPokemon);
-
 }
 
 function getPokemonSpritesByName(name) {
@@ -304,12 +300,9 @@ function filterPokemonCards(allCards, filter) {
             let pokemon = allPokemonData.find(pkmn => pkmn.name === pokemonName);
             if (pokemon) {
                 foundPokemonFromSearch.push(pokemon);
-            }
-        } else {
+            }} else {
             card.style.display = 'none';        // when nothing found --> hide all cards 
-        }
-    });
-
+        }});
     return foundPokemon;
 }
 
