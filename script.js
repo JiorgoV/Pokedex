@@ -184,6 +184,67 @@ function getEvolutionNames(chain) {
     return { names, secondNames, thirdNames };
 }
 
+function getEvolutionStagesHTML(name) {
+    let sprite = getPokemonSpritesByName(name);
+    let imgHTML = '';
+
+    if (sprite) {
+        imgHTML = `<img class="dialog-img" src="${sprite}" alt="${name}">`;
+    } else {
+        imgHTML = '<div class="no-image">🚫</br>No Image</div>';
+    }
+    return `
+        <div class="evolution-stage">
+            ${imgHTML}
+            <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
+        </div>
+    `;
+}
+
+function getBaseEvolution(names) {
+    // show names from first evo
+    let html = '';
+    html += '<div class="evolution-container">';
+    names.forEach((name, index) => {
+        if (index > 0) {
+            html += '<span class="arrow">→</span>';
+        }
+        html += getEvolutionStagesHTML(name);
+    });
+    html += '</div>';
+    return html;
+}
+
+function getSecondEvolution(secondNames) {
+    // show names from second evo
+    if (secondNames.length === 0) {
+        return '<p class="no-evolution">This Pokemon doesn`t evolve</p>';
+    }
+    let html = '<div class="second-evolution-container">';
+    secondNames.forEach((name) => {
+        html += '<div class="second-evolution-items">';
+        html += '<span class="arrow">→</span>';
+        html += getEvolutionStagesHTML(name);
+        html += '</div>';
+    });
+    html += '</div>';
+    return html;
+}
+
+function getThirdEvolution(thirdNames) {
+    // show names from third evo
+    if (thirdNames.length === 0) {
+        return '';
+    }
+    let html = '<div class="third-evolution-container">';
+    thirdNames.forEach((name) => {
+        html += '<span class="arrow">→</span>';
+        html += getEvolutionStagesHTML(name);
+    });
+    html += '</div>';
+    return html;
+}
+
 function nextPokemon() {
     let usedArray = getArray();
     if (currentPokemonIndex < usedArray.length - 1) {
@@ -193,7 +254,7 @@ function nextPokemon() {
     }
 
     currentPokemon = usedArray[currentPokemonIndex];
-    renderDialogContent(pokemon);
+    renderDialogContent(currentPokemon);
 }
 
 function previousPokemon() {
@@ -205,7 +266,7 @@ function previousPokemon() {
     }
 
     currentPokemon = usedArray[currentPokemonIndex];
-    renderDialogContent(pokemon);
+    renderDialogContent(currentPokemon);
 }
 
 function searchPokemon() {
@@ -235,7 +296,7 @@ function getPokemonSpritesByName(name) {
 function filterPokemonCards(allCards, filter) {
     let foundPokemon = 0;
     foundPokemonFromSearch = [];
-    allCards.forEach((card) => {        // go through every pokemoncard
+    allCards.forEach((card) => {        // go through every pokemoncard in allCards
         let pokemonName = card.querySelector('.id-name h3:last-child').textContent.toLowerCase();       // get the name
         if (pokemonName.indexOf(filter) > -1) {         // Check if written(filter) is in the name. IndexOf() gives position back or -1(not found)!
             card.style.display = '';
