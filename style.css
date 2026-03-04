@@ -25,23 +25,26 @@ h1 {
 
 .headline {
   color: #fdc51c;
-  font-size: 104px;
+  font-size: 84px;
   font-family: "Cherry Bomb One", system-ui;
   font-weight: 400;
   font-style: normal;
-  padding-top: 16px;
   text-decoration: none;
 }
 
 body {
-  /* background-color: rgb(5, 23, 30) !important; */
-  /* max-width: 1920px; */
   background-image: url(./assets/img/pokemonball.jpg);
-  background-repeat: repeat-y repeat-x;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 body.no-scroll {
@@ -53,16 +56,14 @@ body.no-scroll {
   z-index: 1;
   left: 50%;
   transform: translate(-50%, 0);
-  top: 16px;
-  /* height: 680px; */
+  top: 25%;
   overflow-y: auto;
   width: 90%;
   max-width: 560px;
   background: none;
   border-style: solid;
   border-color: #08449e;
-  border-width: 8px;
-  border-radius: 32px;
+  border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 0;
 }
@@ -71,10 +72,12 @@ body.no-scroll {
   height: 100%;
   display: flex;
   flex-direction: column;
+  border: solid 8px #08449e;
+    border-radius: 8px;
 }
 
 .dialog-top {
-  border-radius: 20px 20px 0 0;
+
   padding-bottom: 8px;
   position: relative;
   flex-shrink: 0;
@@ -82,7 +85,7 @@ body.no-scroll {
 
 .dialog-bottom {
   background-color: white;
-  border-radius: 0 0 20px 20px;
+
   flex: 1;
 }
 
@@ -92,8 +95,9 @@ body.no-scroll {
 }
 
 header {
+  flex-shrink: 0;
   background-image: linear-gradient(to top, red, white);
-  height: 168px;
+  height: 120px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -101,15 +105,18 @@ header {
 }
 
 footer {
+  flex-shrink: 0;
   height: 60px;
   width: 100%;
-  /* max-width: 1920px; */
   background-image: linear-gradient(to top, red, white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-content {
-  /* background-color: rgb(5, 23, 30); */
-  /* background-image: url(./assets/img/pokemonball.jpg); */
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -117,8 +124,6 @@ footer {
   justify-content: center;
   width: 100%;
   max-width: 1920px;
-  min-height: 100vh;
-
 }
 
 .pokeball {
@@ -127,17 +132,14 @@ footer {
 }
 
 .search-bar {
-  height: 48px;
-  width: 320px;
   margin-right: 32px;
   border-radius: 8px;
 }
 
 .pokemon-card {
-  /* background-color: rgb(16 71 89); */
   background-color: #ffc107;
   color: white;
-  height: 340px;
+  height: 304px;
   width: 240px;
   cursor: pointer;
   border-radius: 5px;
@@ -155,7 +157,7 @@ footer {
 .loading-more {
   display: flex;
   justify-content: center;
-  padding: 24px;
+  padding: 8px;
 }
 
 button {
@@ -201,7 +203,6 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -240,7 +241,7 @@ button {
 }
 
 .pokemon-img {
-  height: 232px;
+  height: 196px;
   background-color: whitesmoke;
   display: flex;
   justify-content: space-evenly;
@@ -318,7 +319,7 @@ button {
 .evolution-wrapper {
   display: flex;
   justify-content: center;
-  max-height: 400px;
+  max-height: 216px;
   overflow-y: auto;
 }
 
@@ -392,9 +393,8 @@ button {
   background: none;
   position: absolute;
   top: 8px;
-  right: 16px;
+  right: 24px;
   color: #312d2de6;
-  ;
   font-size: 40px;
   font-weight: 400;
   font-family: "Cherry Bomb One", system-ui;
@@ -410,6 +410,7 @@ button {
     border-radius: 0;
     border: none;
     max-width: none;
+    padding: 16px;
   }
 
   .dialog-top {
@@ -437,6 +438,7 @@ button {
     flex-direction: column;
     padding-bottom: 16px;
     padding-top: 16px;
+    padding-left: 0;
   }
 
   .headline {
@@ -462,6 +464,10 @@ button {
     gap: 68px;
     height: 270px;
 
+  }
+
+  .evolution-wrapper {
+    max-height: 256px;
   }
 }
 

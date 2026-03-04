@@ -9,15 +9,19 @@ function getDialogHeaderHTML(pokemon, gifUrl, primaryType) {
     `;
 }
 
-function getTypesHTML(types) {
-    let typesHTML = '';
-    types.forEach((type) => {
-        typesHTML += `<img src="assets/icons/${type.type.name}.svg"    
-                    alt="${type.type.name}"
-                    class="type-icon"
-                    title="${type.type.name}">`;
-    })
-    return typesHTML;
+function getDialogContentHTML(pokemon, gifUrl, primaryType, typesHTML, statsHTML) {
+    return `
+        <div class="dialog-top ${primaryType}">
+            ${getDialogHeaderHTML(pokemon, gifUrl, primaryType)}
+            <div class="pokemon-types">${typesHTML}</div>
+        </div>
+        <div class="dialog-bottom">
+            ${getTabNavigationHTML()}
+            ${getMainTabHTML(pokemon)}       
+            ${getStatsTabHTML(statsHTML)}    
+            ${getEvolutionTabHTML()}    
+        </div>
+    `;
 }
 
 function getTabNavigationHTML() {
@@ -53,15 +57,7 @@ function getStatsRowHTML(statName, statValue, percentage) {
         </div>`;
 }
 
-function getStatsTabHTML(pokemon) {
-    const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
-    let statsHTML = '';
-    pokemon.stats.forEach((stat, index) => {
-        let percentage = stat.base_stat;
-        if (percentage > 100) {
-            percentage = 100;
-        }
-        statsHTML += getStatsRowHTML(statNames[index], stat.base_stat, percentage);});
+function getStatsTabHTML(statsHTML) {
     return `<div id="stats-tab" class="tab-content">
                 <div class="tab-stats">
                     ${statsHTML}
@@ -78,12 +74,11 @@ function getEvolutionTabHTML() {
 function getEvolutionHTML(chain) {
     if (!chain) return '<p>No Evolutionchain available</p>';
     let html = '<div class="evolution-wrapper">';
-    let evolutionData = getEvolutionNames(chain); 
-    
+    let evolutionData = getEvolutionNames(chain);
+
     html += getBaseEvolution(evolutionData.names);
     html += getSecondEvolution(evolutionData.secondNames);
     html += getThirdEvolution(evolutionData.thirdNames);
-    
     html += '</div>';
     return html;
 }
@@ -91,13 +86,12 @@ function getEvolutionHTML(chain) {
 function getEvolutionStagesHTML(name) {
     let sprite = getPokemonSpritesByName(name);
     let imgHTML = '';
-    
+
     if (sprite) {
         imgHTML = `<img class="dialog-img" src="${sprite}" alt="${name}">`;
     } else {
         imgHTML = '<div class="no-image">🚫</br>No Image</div>';
     }
-    
     return `
         <div class="evolution-stage">
             ${imgHTML}
@@ -106,24 +100,8 @@ function getEvolutionStagesHTML(name) {
     `;
 }
 
-function getEvolutionNames(chain) {
-    let names = [chain.species.name];       // Base Pokemon ---> gibt es immer
-    let secondNames = [];
-    let thirdNames = []; 
-
-    if (chain.evolves_to && chain.evolves_to.length > 0) {  // durch alle 2. Evolutionen durchgehen wenn welche da sind
-        for (let i = 0; i < chain.evolves_to.length; i++) {
-            secondNames.push(chain.evolves_to[i].species.name);       // Evolution in secondNames pushen
-            
-            if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // 3. Evolution checken ob vorhanden
-                for (let index = 0; index < chain.evolves_to[i].evolves_to.length; index++) {
-                    thirdNames.push(chain.evolves_to[i].evolves_to[index].species.name);     // Evolution in thirdNames pushen
-    }}}}
-     return { names, secondNames, thirdNames };
-}
-
 function getBaseEvolution(names) {
-     // erste evolution namen Anzeigen
+    // show names from first evo
     let html = '';
     html += '<div class="evolution-container">';
     names.forEach((name, index) => {
@@ -137,31 +115,31 @@ function getBaseEvolution(names) {
 }
 
 function getSecondEvolution(secondNames) {
-    // zweite evolution namen Anzeigen
+    // show names from second evo
     if (secondNames.length === 0) {
         return '<p class="no-evolution">This Pokemon doesn`t evolve</p>';
-    } 
-    let html = '<div class="second-evolution-container">';  
+    }
+    let html = '<div class="second-evolution-container">';
     secondNames.forEach((name) => {
         html += '<div class="second-evolution-items">';
         html += '<span class="arrow">→</span>';
         html += getEvolutionStagesHTML(name);
         html += '</div>';
-    }); 
+    });
     html += '</div>';
     return html;
 }
 
 function getThirdEvolution(thirdNames) {
-    // dritte evolution namen Anzeigen
+    // show names from third evo
     if (thirdNames.length === 0) {
         return '';
-    }  
-    let html = '<div class="third-evolution-container">';    
+    }
+    let html = '<div class="third-evolution-container">';
     thirdNames.forEach((name) => {
         html += '<span class="arrow">→</span>';
         html += getEvolutionStagesHTML(name);
-    }); 
+    });
     html += '</div>';
     return html;
 }
@@ -184,4 +162,3 @@ function getPokemonCardHTML(pokemon, imageUrl, primaryType) {
         `;
 }
 
- 
