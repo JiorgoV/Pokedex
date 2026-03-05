@@ -1,6 +1,6 @@
 const BASE_URL = "https://pokeapi.co/api/v2/";  // Basic-URL for all API-Calls
 let currentOffset = 0;
-const LIMIT = 133;
+const LIMIT = 30;
 let allPokemonData = [];        // all Pokemon
 let currentPokemon = null;
 let currentPokemonIndex = null;
@@ -30,7 +30,7 @@ async function fetchPokemonDetails(pokemonList) {
     let pokemonDetails = [];
     for (let i = 0; i < pokemonList.length; i++) {
         let pokemon = pokemonList[i];
-        let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Shorten the url (remove "https://pokeapi.co/api/v2/" with nothing) so "pokemon/17" stays
+        let shortUrl = pokemon.url.replace('https://pokeapi.co/api/v2/', '');   // Shorten the url (replace "https://pokeapi.co/api/v2/" with nothing) so "pokemon/17" stays
         let details = await loadData(shortUrl);     // load details
         pokemonDetails.push(details);           // add details
         allPokemonData.push(details);           // removed forEach because it would push all pokemon
@@ -115,18 +115,18 @@ function renderDialogContent(pokemon) {
     dialogContent.innerHTML = getDialogContentHTML(pokemon, gifUrl, primaryType, typesHTML, statsHTML);
 }
 
-function showTab(tabName, event) {
-    let allTabs = document.querySelectorAll('.tab-content');       // All Tab-Content (Main, Stats, Evolution)
-    allTabs.forEach((tab) => {
-        tab.classList.remove('active');
+function showTab(tabName, event) {      // switch throug tabs in dialog   event = click-event from button
+    let allTabs = document.querySelectorAll('.tab-content');       // get All Tab-Content (Main, Stats, Evolution)
+    allTabs.forEach((tab) => {                  // search for tab in allTabs and get the tabs
+        tab.classList.remove('active');         // remove class="active" from all tabs
     });
-    let allButtons = document.querySelectorAll('.tab-btn');
+    let allButtons = document.querySelectorAll('.tab-btn');     // get all tab-buttons
     allButtons.forEach((btn) => {
         btn.classList.remove('active');
     });
-    document.getElementById(tabName + '-tab').classList.add('active');
-    event.target.classList.add('active');
-    if (tabName === 'evolution') {
+    document.getElementById(tabName + '-tab').classList.add('active');      // add class="active" to chosen tab. tabname + '-tab' = 'stats' + '-tab' = 'stats-tab'
+    event.target.classList.add('active');       // add class="active" to clicked button
+    if (tabName === 'evolution') {      // if evolution-tab ist chosen -> load evolution chain for current pokemon
         loadEvolutionForCurrentPokemon();
     }
 }
@@ -166,15 +166,15 @@ async function loadEvolutionForCurrentPokemon() {
 }
 
 function getEvolutionNames(chain) {
-    let names = [chain.species.name];       // Base Pokemon ---> gibt es immer
+    let names = [chain.species.name];       // Base Pokemon ---> allways there
     let secondNames = [];
     let thirdNames = [];
-    if (chain.evolves_to && chain.evolves_to.length > 0) {  // durch alle 2. Evolutionen durchgehen wenn welche da sind
+    if (chain.evolves_to && chain.evolves_to.length > 0) {  // go through all 2. evolutions if theres any
         for (let i = 0; i < chain.evolves_to.length; i++) {
-            secondNames.push(chain.evolves_to[i].species.name);       // Evolution in secondNames pushen
-            if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // 3. Evolution checken ob vorhanden
+            secondNames.push(chain.evolves_to[i].species.name);       // push Evolution in secondNames 
+            if (chain.evolves_to[i].evolves_to && chain.evolves_to[i].evolves_to.length > 0) {      // check if theres 3. evolution and go through
                 for (let index = 0; index < chain.evolves_to[i].evolves_to.length; index++) {
-                    thirdNames.push(chain.evolves_to[i].evolves_to[index].species.name);     // Evolution in thirdNames pushen
+                    thirdNames.push(chain.evolves_to[i].evolves_to[index].species.name);     // push Evolution in thirdNames 
                 }
             }
         }
@@ -183,7 +183,7 @@ function getEvolutionNames(chain) {
 }
 
 function getEvolutionStagesHTML(name) {
-    let sprite = getPokemonSpritesByName(name);
+    let sprite = getPokemonSpritesByName(name);     // pokemon.sprites.front_default
     let imgHTML = '';
     if (sprite) {
         imgHTML = `<img class="dialog-img" src="${sprite}" alt="${name}">`;

@@ -73,7 +73,7 @@ body.no-scroll {
   display: flex;
   flex-direction: column;
   border: solid 8px #08449e;
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 .dialog-top {
@@ -318,10 +318,9 @@ button {
 
 .evolution-wrapper {
   display: flex;
-  justify-content: flex-start;
-  max-height: 216px;
+  justify-content: center;
+  max-height: 316px;
   overflow-y: auto;
-  padding-left: 40px;
 }
 
 .evolution-container {
@@ -332,6 +331,7 @@ button {
 .second-evolution-container {
   display: flex;
   flex-direction: column;
+  max-height: 280px;
 }
 
 .third-evolution-container {
@@ -464,18 +464,32 @@ button {
     flex-direction: column;
     gap: 68px;
     height: 270px;
-
-  }
-
-  .evolution-wrapper {
-    max-height: 256px;
   }
 }
 
-@media(min-width: 320px) and (max-width: 550px) {
-  .evolution-container {
+@media(min-width: 320px) and (max-width: 560px) {
+  .evolution-wrapper {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+  }
+
+  .second-evolution-items {
     flex-direction: column;
   }
+
+  .third-evolution-container {
+    flex-direction: column;
+  }
+
+  .arrow {
+    rotate: 90deg;
+  }
+
+}
+
+@media(min-width: 560px) and (max-width: 768px) {
 
 }
 
