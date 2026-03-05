@@ -44,7 +44,7 @@ function updateLoadingSpinner() {
 
 function renderPokemon(pokemonList) {
     let mainContent = document.getElementById('main-content');
-    
+
     pokemonList.forEach((pokemon) => {      // go through every pokemon in array(pokemonList)
         let cardHTML = getPokemonCard(pokemon);  // get the finished HTML for the pokeon card (logic in  getPokemonCard())
         mainContent.innerHTML += cardHTML;      // add cardHTML to mainContent
@@ -268,17 +268,48 @@ function previousPokemon() {
 
 function searchPokemon() {
     let input = document.querySelector('.search-bar');
-    let filter = input.value.toLowerCase();
+    let filter = input.value.toLowerCase().trim();
     let allCards = document.querySelectorAll('.pokemon-card');
     let noResults = document.getElementById('no-results');
-    if (filter.length < 3) {
-        showAllPokemonCards(allCards, noResults);          //if less than 3 letters --> show all Cards
+    let errorMsg = document.getElementById('search-error');
+    errorMsg.classList.add('d-none');
+    if (filter.length > 0 && filter.length < 3) {
+        showSearchError(errorMsg, allCards);  
+        return;
+    }
+    if (filter.length === 0) {
+        showAllPokemonCards(allCards, noResults);
         toggleLoadmoreButton(true);
         return;
     }
+    runSearch(allCards, noResults, filter);
+}
+
+function runSearch(allCards, noResults, filter) {
     toggleLoadmoreButton(false);
     let foundPokemon = filterPokemonCards(allCards, filter);
     toggleNoResultsText(noResults, foundPokemon);
+}
+
+function showSearchError(errorMsg, allCards) {
+    errorMsg.classList.remove('d-none');
+    allCards.forEach((card) => {
+        card.style.display = 'none';
+    });
+}
+
+function resetSearch() {
+    let input = document.querySelector('.search-bar');
+    let allCards = document.querySelectorAll('.pokemon-card');
+    let noResults = document.getElementById('no-results');
+    let errorMsg = document.getElementById('search-error');
+
+    input.value = '';
+    errorMsg.classList.add('d-none');
+
+    showAllPokemonCards(allCards, noResults);
+    toggleLoadmoreButton(true);
+
 }
 
 function getPokemonSpritesByName(name) {
@@ -300,9 +331,11 @@ function filterPokemonCards(allCards, filter) {
             let pokemon = allPokemonData.find(pkmn => pkmn.name === pokemonName);
             if (pokemon) {
                 foundPokemonFromSearch.push(pokemon);
-            }} else {
+            }
+        } else {
             card.style.display = 'none';        // when nothing found --> hide all cards 
-        }});
+        }
+    });
     return foundPokemon;
 }
 
@@ -339,6 +372,6 @@ function getPokemonCard(pokemon) {
     let imageUrl = pokemon.sprites.front_default;
     let primaryType = pokemon.types[0].type.name;
     let typesHTML = getTypesHTML(pokemon.types);  // get Types HTML before
-    
-    return getPokemonCardHTML(pokemon, imageUrl, primaryType, typesHTML); 
+
+    return getPokemonCardHTML(pokemon, imageUrl, primaryType, typesHTML);
 }

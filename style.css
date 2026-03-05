@@ -131,9 +131,30 @@ footer {
   margin: 8px;
 }
 
+.search-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap
+}
+
 .search-bar {
-  margin-right: 32px;
+  margin-right: 0;
+  padding: 8px;
   border-radius: 8px;
+  border: 2px solid #08449e;
+}
+
+.search-reset-buttons {
+  background-color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border: 2px solid #08449e;
+}
+
+.search-reset-buttons:hover {
+  box-shadow: 4px 4px 2px white;
+  transform: scale(1.05);
 }
 
 .pokemon-card {
@@ -319,7 +340,7 @@ button {
 .evolution-wrapper {
   display: flex;
   justify-content: center;
-  max-height: 316px;
+  max-height: 210px;
   overflow-y: auto;
 }
 
@@ -416,7 +437,7 @@ button {
 
   .dialog-top {
     border-radius: 0;
-    height: 40vh;
+    height: 41vh;
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -462,7 +483,7 @@ button {
   .pkm-id-and-img {
     display: flex;
     flex-direction: column;
-    gap: 68px;
+    gap: 60px;
     height: 270px;
   }
 }
@@ -472,7 +493,7 @@ button {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    
+
   }
 
   .second-evolution-items {
@@ -487,11 +508,13 @@ button {
     rotate: 90deg;
   }
 
+  .tab-navigation {
+    gap: 4px;
+  }
+
 }
 
-@media(min-width: 560px) and (max-width: 768px) {
-
-}
+@media(min-width: 560px) and (max-width: 768px) {}
 
 @media(min-width: 768px) and (max-width: 1024px) {
   .headline {
