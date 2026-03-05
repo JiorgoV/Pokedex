@@ -275,13 +275,11 @@ function searchPokemon() {
     errorMsg.classList.add('d-none');
     if (filter.length > 0 && filter.length < 3) {
         showSearchError(errorMsg, allCards);  
-        return;
-    }
+        return;}
     if (filter.length === 0) {
         showAllPokemonCards(allCards, noResults);
         toggleLoadmoreButton(true);
-        return;
-    }
+        return;}
     runSearch(allCards, noResults, filter);
 }
 
