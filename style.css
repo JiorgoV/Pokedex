@@ -21,6 +21,7 @@ h1 {
   width: 100%;
   max-width: 1920px;
   padding-left: 64px;
+  padding-right: 16px;
 }
 
 .headline {
@@ -493,7 +494,6 @@ button {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-
   }
 
   .second-evolution-items {
@@ -510,6 +510,11 @@ button {
 
   .tab-navigation {
     gap: 4px;
+  }
+
+  .header-content {
+    padding-right: 8px;
+    padding-left: 8px;
   }
 
 }
@@ -533,10 +538,16 @@ button {
 }
 
 .no-results {
-  text-align: center;
+  display: flex;
   font-size: 24px;
-  color: white;
-  padding: 40px;
+  padding: 24px;
+  background-color: #f1f0f0;
+  opacity: 0.8;
+  color: black;
+  border-radius: 5px;
+  height: 236px;
+  align-items: center;
+  justify-content: center;
 }
 
 .load-button {

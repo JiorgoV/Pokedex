@@ -267,7 +267,7 @@ function previousPokemon() {
 }
 
 function searchPokemon() {
-    let input = document.querySelector('.search-bar');
+    let input = document.getElementById('search-bar');
     let filter = input.value.toLowerCase().trim();
     let allCards = document.querySelectorAll('.pokemon-card');
     let noResults = document.getElementById('no-results');

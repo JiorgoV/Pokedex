@@ -30,7 +30,7 @@
                 <h1 class="headline">Pokedex</h1>
             </a>
             <div class="search-container">
-            <input class="search-bar" type="text" placeholder="Find Pokemon...">
+            <input class="search-bar" id="search-bar" type="text" placeholder="Type pokemon name...">
             <button class="search-reset-buttons" onclick="searchPokemon()">🔎</button>
             <button class="search-reset-buttons" onclick="resetSearch()">♻️</button>
         </div></div>
@@ -38,7 +38,7 @@
 
     <section class="main-content" id="main-content">
 
-        <p id="no-results" class="no-results d-none">No Pokemons Found</p>
+        <p id="no-results" class="no-results d-none">No Pokemon Found</p>
         <p id="search-error" class="no-results d-none">Minimum 3 characters required!</p>
 
     </section>
@@ -64,4 +64,4 @@
     <script src="./script.js"></script>
 </body>
 
-</html>  
+</html>
