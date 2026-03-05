@@ -182,20 +182,14 @@ function getEvolutionNames(chain) {
     return { names, secondNames, thirdNames };
 }
 
-function getEvolutionStagesHTML(name) {
-    let sprite = getPokemonSpritesByName(name);     // pokemon.sprites.front_default
-    let imgHTML = '';
+function getEvolutionStageImgHTML(name) {
+    let sprite = getPokemonSpritesByName(name);
+    
     if (sprite) {
-        imgHTML = `<img class="dialog-img" src="${sprite}" alt="${name}">`;
+        return `<img class="dialog-img" src="${sprite}" alt="${name}">`;
     } else {
-        imgHTML = '<div class="no-image">🚫</br>No Image</div>';
+        return '<div class="no-image">🚫</br>No Image</div>';
     }
-    return `
-        <div class="evolution-stage">
-            ${imgHTML}
-            <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
-        </div>
-    `;
 }
 
 function getBaseEvolution(names) {
@@ -206,7 +200,8 @@ function getBaseEvolution(names) {
         if (index > 0) {
             html += '<span class="arrow">→</span>';
         }
-        html += getEvolutionStagesHTML(name);
+        let imgHTML = getEvolutionStageImgHTML(name);
+        html += getEvolutionStagesHTML(name, imgHTML);
     });
     html += '</div>';
     return html;
@@ -221,7 +216,8 @@ function getSecondEvolution(secondNames) {
     secondNames.forEach((name) => {
         html += '<div class="second-evolution-items">';
         html += '<span class="arrow">→</span>';
-        html += getEvolutionStagesHTML(name);
+        let imgHTML = getEvolutionStageImgHTML(name);
+        html += getEvolutionStagesHTML(name, imgHTML);
         html += '</div>';
     });
     html += '</div>';
@@ -236,7 +232,8 @@ function getThirdEvolution(thirdNames) {
     let html = '<div class="third-evolution-container">';
     thirdNames.forEach((name) => {
         html += '<span class="arrow">→</span>';
-        html += getEvolutionStagesHTML(name);
+        let imgHTML = getEvolutionStageImgHTML(name);
+        html += getEvolutionStagesHTML(name, imgHTML);
     });
     html += '</div>';
     return html;
@@ -274,12 +271,14 @@ function searchPokemon() {
     let errorMsg = document.getElementById('search-error');
     errorMsg.classList.add('d-none');
     if (filter.length > 0 && filter.length < 3) {
-        showSearchError(errorMsg, allCards);  
-        return;}
+        showSearchError(errorMsg, allCards);
+        return;
+    }
     if (filter.length === 0) {
         showAllPokemonCards(allCards, noResults);
         toggleLoadmoreButton(true);
-        return;}
+        return;
+    }
     runSearch(allCards, noResults, filter);
 }
 

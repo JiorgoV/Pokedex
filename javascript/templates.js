@@ -97,3 +97,12 @@ function getPokemonCardHTML(pokemon, imageUrl, primaryType, typesHTML) {
         </div>
     `;
 }
+
+function getEvolutionStagesHTML(name, imgHTML) {
+    return `
+        <div class="evolution-stage">
+            ${imgHTML}
+            <p>${name.charAt(0).toUpperCase() + name.slice(1)}</p>
+        </div>
+    `;
+}
